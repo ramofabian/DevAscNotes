@@ -35,3 +35,19 @@ git rm <FILE/DIRECTORY>
 #From remote repo only
 git rm --cached <FILE/DIRECTORY>
 ```
+### List all branches
+```bash
+#List branches 
+git branch
+#List branches with details
+git branch -r
+```
+### Create a branch
+```bash
+#Create a branch  
+git branch <BRANCH_NAME>
+#Create a branch a switch to that branch inmediatily  
+git checkout -b <BRANCH_NAME>
+#Switch to a already exisiting branch
+git checkout <BRANCH_NAME>
+```
