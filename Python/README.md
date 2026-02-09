@@ -24,4 +24,16 @@
 </table>
 
 ## Data Types
-To work with data types use the file `datatypes.py` script
+To work with data types use the file `datatypes.py` script.
+
+<b>Variable definition:</b> 
+A variable in python is a collection of letters (without spaces) defined by the programmer to name a value and save it in memory to be used along the script. This `name` must have a mean and relation to what the stored value is about.
+
+This is a variable can be defined and pinted by CLI:
+```py
+my_cool_variable = 42
+print(my_cool_variable)
+```
+
+In this example I defined a variable called `my_cool_variable` and stored the value `42` in memory. To show the content of this variable I used print function and the variable name.
+
