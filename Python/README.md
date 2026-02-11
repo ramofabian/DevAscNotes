@@ -97,3 +97,17 @@ pyhton datatypes.py --help
 pyhton datatypes.py
 ```
 ## Flow control
+It allows you to control how the script is executed. There are ways to control it like:
+- `IF/ELIF/ELSE`
+- `FOR`
+- `WHILE`
+- `BREAK`
+- `CONTINUE`
+- `NESTED FOR`
+- `MATCH` --> Avatiilabe from python `3.10` onwards
+
+Examples:
+```py
+pyhton flowcontrol.py --help
+pyhton flowcontrol.py
+```
