@@ -108,6 +108,50 @@ It allows you to control how the script is executed. There are ways to control i
 
 Examples:
 ```py
-pyhton flowcontrol.py --help
 pyhton flowcontrol.py
 ```
+
+## Functions, Methods, and Classes
+### Function = Methods
+Function is a group of code that executes specific job and it is reused across the script main utilization. To save code lines these code lines are contaned within an function name whithout spaces. 
+
+An example of a function is `print()` which is used in python to display information on CLI. This is how a function can be defined:
+```py
+def read_keyboard_and_print() -> None:
+    in_var = input("Enter_messages: ")
+    print(in_var)
+read_keyboard_and_print()
+```
+
+<b>Advantages:</b>
+- Functions helps to maintain a code clean and easy to read.
+- Reduce the number or code lines.
+- As the code is struced by blocks it is easier to maintain.
+
+To execute the code example run the command: `python Python/flowcontrol.py `
+
+### Clasess
+Clasess are objects object which contains atributes and methods insde.
+<b>built-in class in Python is </b> a strictly defined dictionary with built-in methods. i.e: All datatypes are classes.
+
+#### Initialization
+This is how a class can determent which are main initial input parameters needed for class execution.
+```py
+class Car:
+    def __init__(self, make: str, model: str, year: int, mileage: int, condition: str, color: str) -> None:
+        self.make = make
+        self.model = model
+        self.year = year
+        self.mileage = mileage
+        self.condition = condition
+        self.color = color
+```
+
+#### Methods
+This is how functions can be defined within a class. To see all build-in and custom methods available run the line as below:
+```py
+print(dir(print()))
+print(dir(input()))
+```
+
+To execute the code example run the command: `python Python/functionMethodClasses.py `
