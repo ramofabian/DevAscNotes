@@ -246,7 +246,7 @@ router1:
 
 #### Reading a yaml file with python
 - Follow this procedue to parse json to dict:
-    1. Install `xmltodict`: `pip install pyyaml`
-    2. Use `json.safe_load()` to convert the string to a python dictionary.<br>
+    1. Install `pyyaml`: `pip install pyyaml`
+    2. Use `yaml.safe_load()` to convert the string to a python dictionary.<br>
     <b>Notes:</b> Do not use `yaml.load()` becase it can open scurity breaches.
     3. Execute the script to see how parsed informa: `python Python/yamlreader.py`
