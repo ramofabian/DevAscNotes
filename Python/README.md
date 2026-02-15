@@ -250,3 +250,222 @@ router1:
     2. Use `yaml.safe_load()` to convert the string to a python dictionary.<br>
     <b>Notes:</b> Do not use `yaml.load()` becase it can open scurity breaches.
     3. Execute the script to see how parsed informa: `python Python/yamlreader.py`
+
+## API (Application Programming Interface)
+API is how network comonenetes can comunicate each other, it uses HTTP protocol and JSON or XML for data structure. As it uses HTTP protocol, APIs uses its methods to send and received information: `GET`, `POST`, `PUT`, `DELETE`.
+
+<b>3 tier Application exmaple:</b>This is how micro services architecture works, by having front, middleware and backend servers which interace eachother for some determiniated object. Companies like Amazon runs hundreds of micro servers like below.
+
+```bash
+                           API
++-----------+         +------------+         +-----------+-------> Database Server         
+| Front end |  HTTP   | APP Server |  HTTP   | BAackend  |-------> Logistics Server         
+|  Server   |-------->| Middleware |<------->|  Server   |-------> Order Server
++-----------+  JSON   +------------+  JSON   +-----------+-------> Monitoring Server
+      ^                     
+      |                     
+   Web portal               
+ i.e.: Amazon.com           
+      | 
++-----------+
+| Client    |
+| computer  |
++-----------+
+
+```
+
+<b>Usual work of automation engineer:</b> We create code to be executed from a client computer or server to execute specific tasks in normal network operations like: Network deployment, maintenance, migrations, etc.
+
+```bash                       
++------------+         +------------+           |-------> Database Server         
+|  Client    |         |    Run     |    API    |-------> Network Controller Server         
+| computer   |-------->|    Code    |<--------->|-------> Routers
+| or server  |         +------------+           |-------> Switches     
+|____________|                                  |-------> Monitoring Systems
+|            |
+| VS Code    |
+|____________|
+|            |
+| Script .py |
++------------+
+```
+### Authentication
+#### Basic Authentication
+- It sends credentials in uncrypted plain text.
+- Most risky one.
+- Use SSL or TLS with basic authentication.
+#### API Key Authentication
+- Pre-shared  key by client and server.
+- Key transmision potentially suseptible to interceptions.
+- Typically used for readonly users.
+#### Rest API-OAUTH
+- Generates a tocker from authentication server.
+- Tokens can be checked at anytime to prove validation.
+- Ability to limit the scope and autherization time spam.
+- OAUTH => Open Authentication
+### REST API
+- There is no specific standar to construct API request.
+- Request and its type can change depending on the software.
+- API documentation is critical for building requests.
+### REST Structures:
+1. URL or URI: Uniform Resouce Locator, Uniform Resource Identifier.
+2. Method: Get, post, delete, put, update.
+3. Header: Usually uses HTTP headers added in `name:value` pairs.
+i.e.: Keep-alive, timeout, max, content-type, etc.
+4. Body: Data of the message.
+### Webhooks
+- Usually called reverse APIs.
+- HTTP/S post message triggered by an event.
+- Usually it is used to provide event notifications.
+- Ligthweigth APIs driving events.
+- Application can be registered with URL.
+- APP with webhook muct be allways running.
+### HTTP/S
+#### Methods or Verbs
+List of used methods:
+- `GET`: Used to retrieve data from remote end.
+- `POST`: Create new data in the remote end.
+- `DELETE`: Remove information from the remote end.
+- `PUT/PATCH`: Update information in the remote end.
+#### Headers
+This is the metadata used to interact with remote ends and it can indicate the propuse of the message and additional specificiations.
+#### Payload
+Some time this field is empty and some others might cotains filters for a query itself.
+#### Response codes
+<table>
+    <tr>
+        <th colspan=2>100s codes</th>
+        <th colspan=2>200s codes</th>
+        <th colspan=2>300s codes</th>
+        <th colspan=2>400s codes</th>
+        <th colspan=2>500s codes</th>
+    </tr>
+    <tr>
+        <td colspan=2>Informational</td>
+        <td colspan=2>Success</td>
+        <td colspan=2>Redirection</td>
+        <td colspan=2>Client side error</td>
+        <td colspan=2>Server side error</td>
+    </tr>
+    <tr>
+        <td>Code</td>
+        <td>Description</td>
+        <td>Code</td>
+        <td>Description</td>
+        <td>Code</td>
+        <td>Description</td>
+        <td>Code</td>
+        <td>Description</td>
+        <td>Code</td>
+        <td>Description</td>
+    </tr>
+    <tr>
+        <td>101</td>
+        <td>Continue code<br>final response will be seen when request will be completed</td>
+        <td>200</td>
+        <td>OK<br>Request was successfull and completed</td>
+        <td>301</td>
+        <td>Endoint moved to another location permanently</td>
+        <td>400</td>
+        <td>Bad request</td>
+        <td>500</td>
+        <td>Internal server error</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td>201</td>
+        <td>Created<br>Request was created</td>
+        <td>302</td>
+        <td>Found</td>
+        <td>401</td>
+        <td>Unauthorized login</td>
+        <td>502</td>
+        <td>Bad gateway</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td>202</td>
+        <td>No Content</td>
+        <td>304</td>
+        <td>Not found</td>
+        <td>403</td>
+        <td>Forbidden</td>
+        <td>503</td>
+        <td>Server unavailable</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>404</td>
+        <td>Not found</td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>408</td>
+        <td>Request timeout</td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>429</td>
+        <td>Too many requests</td>
+        <td></td>
+        <td></td>
+    </tr>
+</table>
+
+### Tools
+There are many tools that can be used to interact with APIs, among them the most important ones are:
+- Postman: [LINK](https://www.postman.com/) 
+- Bruno: [LINK](https://www.usebruno.com/)
+
+In there you can create collections and inside a collection, there are many type of requests thta can be done.
+
+### Quering API with Python
+#### Requirements
+- rich
+- requests
+- json
+
+Commands to install libraries:
+```bash
+pip install rich
+pip install requests
+pip install json
+```
+#### Execution
+Example:
+```py
+import requests
+import json
+from rich.console import Console
+
+cli = Console()
+base_url = "https://swapi.info/api/"
+respose = requests.get(base_url + "people")
+cli.print(response)
+```
+
+To see full code and the challenge execute the python script:
+```bash
+python Python/APIs/swapi.py 
+```
