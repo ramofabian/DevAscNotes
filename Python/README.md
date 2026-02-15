@@ -469,3 +469,127 @@ To see full code and the challenge execute the python script:
 ```bash
 python Python/APIs/swapi.py 
 ```
+### Building your own API using Flask
+Commmon python modules:
+- Flask
+- FastApi
+
+In those modules, the concept of routes is the same as endpoints. Specific modules that can execute specific task or tasks.
+```bash
+http://localhost:8080/|-->Login
+                      |-->Logout
+                      |-->getdata
+                      |-->Pushdata
+```
+### Pre-requisities
+Libraries:
+- flask
+```sh
+pip install flask
+```
+### Flask app initialization script
+This is how Flask app should be initializated/
+
+```py
+from flask import Flask, jsonify, request
+
+# Create a Flask application instance
+app = Flask(__name__)
+
+if __name__ == '__main__':
+    app.run(debug=True)
+```
+
+### Adding a route
+```py
+@app.route('/api/data', methods=['GET'])
+def hello():
+    # Return a JSON response
+    return jsonify({'message': 'Hello, World!'})
+```
+
+### Executing the api with Basic Authentication method enabled
+```sh
+python /Python/flaskapi/myapi.py
+```
+Body for `POST` request:
+```json
+{
+    "make": "Ford",
+    "model": "Focus",
+    "year": "2026"
+}
+```
+### Executing the api with Web Token used as a param 
+```sh
+#Install JWT library
+pip install jwt
+python /Python/flaskapi2/readhumanapi.py
+
+#NOTE: Special postman script for reading the token and saving it in enviroment variable
+pm.collectionVariables.set('token', pm.response.json().token)
+```
+Body for `POST` request:
+```json
+{
+    "name": "Merlot",
+    "age": 55
+}
+```
+
+### Executing the api with Bearer Token used in Athentication header 
+Refrerences:
+- https://www.geeksforgeeks.org/python/flask-api-authentication-with-json-web-tokens/
+- https://medium.com/@alfininfo/easy-way-to-create-and-validate-bearer-token-in-flask-application-95d7e8cb2ffd
+```sh
+python /Python/flaskapi3/readdogsapi.py
+
+#NOTE: Special postman script for reading the token and saving it in enviroment variable
+pm.collectionVariables.set('token', pm.response.json().token)
+```
+Body for `POST` request:
+```json
+{
+    "doglist":
+    [
+        {
+            "name": "Benji",
+            "age": 3,
+            "breed": "Asutralian Sheperd"
+        },
+                {
+            "name": "Hachi",
+            "age": 10,
+            "breed": "Golden Retriver"
+        }
+    ]
+}
+```
+<!-- 
+### Executing the api with OAuth2
+Refrerences: https://realpython.com/flask-google-login/
+```sh
+pip install Authlib 
+python /Python/flaskapi3/readdogsapi.py
+
+#NOTE: Special postman script for reading the token and saving it in enviroment variable
+pm.collectionVariables.set('token', pm.response.json().token)
+```
+Body for `POST` request:
+```json
+{
+    "doglist":
+    [
+        {
+            "name": "Benji",
+            "age": 3,
+            "breed": "Asutralian Sheperd"
+        },
+                {
+            "name": "Hachi",
+            "age": 10,
+            "breed": "Golden Retriver"
+        }
+    ]
+}
+``` -->
