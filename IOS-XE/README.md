@@ -28,7 +28,7 @@ Those YANG modules convert the commands outputs in XML or JSON which is more fri
 
 #### RPC (Remote Procedure Calls)
 - It is a built in command to get or push data by using YANG model.
-- Type of commands:
+- Type of c:
     - `get`: Get operational state information
     - `get-config`: Get configuration
     - `set-config`: Push confguration
@@ -169,5 +169,185 @@ GigabitEthernet4       unassigned      YES NVRAM  administratively down down
 Loopback1              10.10.10.2      YES other  up                    up
 Loopback2              10.10.10.1      YES other  up                    up
 CSR1#
+```
+<Notes:>
+- IOS-XE 3 types of config were we can do changes:
+    - `Startup` config: Configuration used for the booting process
+    - `Running` config: Current live configuration
+    - `Candidate` config: We can introduce changes and then `commit` them to make it active
 
+## YANG and Resconf with IOS-XE
+### RESCONF Protocol
+Diffentences:
+<table>
+    <tr>
+        <th>NETCONF</th>
+        <th>RESTCONF</th>
+    </tr>
+    <tr>
+        <td><code>SSH --> TCP port 830</code></td>
+        <td><code>HTTP/S --> TCP port 80/443/custom port</code></td>
+    </tr>
+    <tr>
+        <td>XML only</td>
+        <td>XML/JSON<br>
+        <code>Headers -> Content-type (XML/JSON)<br>
+              Headers -> Accept (XML/JSON) used to determent which type we will accept.</code></td>
+    </tr>
+    <tr>
+        <td>Release versions years: 2006, 2011</td>
+        <td>Release versions years: 2017, 2019</td>
+    </tr>
+    <tr>
+        <td>It uses <code>RPC</code>: <code>get</code>, <code>get-config</code>, <code>set-config</code></td>
+        <td>It uses <code>REST</code>: <code>GET</code>, <code>PATCH</code>, <code>POST</code>, <code>DELETE</code> Same as APIs</td>
+    </tr>
+</table>
+
+### RESCONF Configuration
+
+Configuration of NETCONF/RESCONF using AAA:
+```sh
+#For AAA only!!
+enable
+configure terminal
+aaa new-model
+aaa group server radius server-name
+server-private ip-address key key-name
+ip vrf forwarding vrf-name
+exit
+aaa authentication login default group group-name local
+aaa authentication login list-name none
+aaa authorization exec default group group-name local
+aaa session-id common
+line console number
+login authentication authentication-list
+end
+```
+1. Usually `resconf` comes with partial configuration done and it can be verifed like the command below:
+```bash
+CSR2#sh run | include http
+ip http server
+ip http authentication local
+ip http secure-server
+ip http client source-interface GigabitEthernet1
+  destination transport-method http
+```
+2. To turn up the `resconf`:
+```bash
+enable
+conf t
+restconf
+```
+After it, the node will sincrhonize internally and loading all configs (startup, running, candidate) into a HTTP database.
+
+3. Verificaation commands:
+```sh
+show platform software yang-management process monitor
+show platform software yang-management process
+show netconf-yang sessions
+show netconf-yang sessions detail
+```
+
+### Connecting to CSR2 via RESCONF using Postman
+#### Getting node capabilities
+List all YANG models supported by the SW version can be checked and compared with the yang model downladed in prevous sections.
+1. Create new collection and name it.
+2. Create an new evniroments and add in it variables with respective values for:
+    - username=Admin
+    - password (encrypted) = password
+    - CSR2IP = `<your IP>`
+2. Inside of previusly created collection create a get request and name it `getCapabilities` with the following information:
+    - Type of request : `GET`
+    - URL: 
+        - `https://{{CSR2IP}}/restconf/data/netconf-state/capabilities` --> full netconf capabilities and yang-data-model
+        - `https://{{CSR2IP}}/restconf/data/ietf-restconf-monitoring:restconf-state/capabilities` --> All capabilities supported by resconf
+    - Headers: 
+        - `Content-type : application/yang-data+json` 
+        - `Accept : application/yang-data+json`.
+        -  With this configuration we are indicating the remote NE we are sending/receving the information in json format.
+    - Authorization:
+        - Auth type: Basic Auth
+            - user=`{{username}}`
+            - password=`{{password}}`
+
+#### Getting node interfaces information
+1. Inside of previusly created collection create a get request and name it `getCapabilities` with the following information:
+    - Type of request : `GET`
+    - URL: 
+        - `https://{{CSR2IP}}/restconf/data/Cisco-IOS-XE-interfaces-oper:interfaces/interface` --> to get all interfaces status.
+        - `https://{{CSR2IP}}/restconf/data/Cisco-IOS-XE-interfaces-oper:interfaces/interface=GigabitEthernet1` --> to get all details from GigabitEthernet1 interface.
+        - `https://{{CSR2IP}}/restconf/data/Cisco-IOS-XE-interfaces-oper:interfaces/interface?fields=admin-status` --> to get `admin-status` in all interfaces.
+        - `https://{{CSR2IP}}/restconf/data/ietf-interfaces:interfaces` --> ietf interface data model (short version)
+    - Headers: 
+        - `Content-type : application/yang-data+json` 
+        - `Accept : application/yang-data+json`.
+        -  With this configuration we are indicating the remote NE we are sending/receving the information in json format.
+    - Authorization:
+        - Auth type: Basic Auth
+            - user=`{{username}}`
+            - password=`{{password}}`
+
+#### Create a new loopback in node
+1. Inside of previusly created collection create a get request and name it `createLoopback` with the following information:
+    - Type of request : `POST`
+    - URL: `https://{{CSR2IP}}/restconf/data/ietf-interfaces:interfaces`
+    - Headers: 
+        - `Content-type : application/yang-data+json` 
+        - `Accept : application/yang-data+json`.
+        -  With this configuration we are indicating the remote NE we are sending/receving the information in json format.
+    - Authorization:
+        - Auth type: Basic Auth
+            - user=`{{username}}`
+            - password=`{{password}}`
+    - Body:
+        - JSON format: 
+```json
+{
+    "ietf-interfaces:interface": {
+        "name": "Loopback102",
+        "type": "iana-if-type:softwareLoopback",
+        "enabled": true,
+        "ietf-ip:ipv4": {
+            "address":[
+                {
+                    "ip": "102.102.102.102",
+                    "netmask": "255.255.255.255"
+                }
+            ]
+        }
+    }
+}
+```
+#### Edit a loopback in node
+1. Inside of previusly created collection create a get request and name it `createLoopback` with the following information:
+    - Type of request : `PUT`
+    - URL: `https://{{CSR2IP}}/restconf/data/ietf-interfaces:interfaces/interface=Loopback102`
+    - Headers: 
+        - `Content-type : application/yang-data+json` 
+        - `Accept : application/yang-data+json`.
+        -  With this configuration we are indicating the remote NE we are sending/receving the information in json format.
+    - Authorization:
+        - Auth type: Basic Auth
+            - user=`{{username}}`
+            - password=`{{password}}`
+    - Body:
+        - JSON format: 
+```json
+{
+    "ietf-interfaces:interface": {
+        "name": "Loopback102",
+        "type": "iana-if-type:softwareLoopback",
+        "enabled": true,
+        "description": "Set via postman", --> NEW value
+        "ietf-ip:ipv4": {
+            "address":[
+                {
+                    "ip": "102.102.102.102",
+                    "netmask": "255.255.255.255"
+                }
+            ]
+        }
+    }
+}
 ```
