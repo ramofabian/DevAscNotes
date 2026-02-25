@@ -351,7 +351,7 @@ List all YANG models supported by the SW version can be checked and compared wit
     }
 }
 ```
-#### Using python to connect via netconf
+#### Using python to connect via restconf
 1. Install request library.
 2. Run python script: `python IOS-XE/resconf/getdata.py`
 Expected output:
@@ -363,13 +363,24 @@ Expected output:
 # Cisco operational model with more detailed interface info (including IPs)
 # YANG module: Cisco-IOS-XE-interfaces-oper:interfaces
 #--------------------
-CISCO_INTERFACES_OPER_RESOURCE = "/data/Cisco-IOS-XE-interfaces-oper:interfaces"
 === Interface Brief (RESTCONF / IETF + Cisco operational) ===
-Interface           IP-Address/Mask       OK?  Method  Status      Protocol
+Interface           IP-Address/Mask       OK?  Method  Status      Protocol  
 -----------------------------------------------------------------------------
-GigabitEthernet1    192.168.160.132       YES  rest    up          up
-GigabitEthernet2    0.0.0.0               YES  rest    up          up
-GigabitEthernet3    0.0.0.0               YES  rest    up          up
-GigabitEthernet4    0.0.0.0               YES  rest    up          up
-Loopback102         102.102.102.102       YES  rest    up          up
+GigabitEthernet1    10.10.20.48           YES  rest    up          up        
+GigabitEthernet2    0.0.0.0               YES  rest    down        down      
+GigabitEthernet3    0.0.0.0               YES  rest    down        down      
+Loopback0           10.0.0.1              YES  rest    up          up        
+Loopback1           20.20.20.1            YES  rest    up          up        
+Loopback10          0.0.0.0               YES  rest    up          up        
+Loopback109         10.255.255.9          YES  rest    up          up        
+VirtualPortGroup0   192.168.1.1           YES  rest    up          up 
+```
+#### Using python to provision via restconf
+1. Install request library.
+2. Run python script: `python IOS-XE/resconf/newloop.py`
+This is python script creates a new loopback IP in a IOS-XE from a pool `20.20.20.0/24`.
+```sh
+python3 IOS-XE/resconf/newloop.py 
+Created Loopback1 with IP 20.20.20.1/255.255.255.255
+Device: 10.10.20.48:443 (RESTCONF user developer)
 ```
