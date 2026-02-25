@@ -351,3 +351,25 @@ List all YANG models supported by the SW version can be checked and compared wit
     }
 }
 ```
+#### Using python to connect via netconf
+1. Install request library.
+2. Run python script: `python IOS-XE/resconf/getdata.py`
+Expected output:
+```bash
+#Used yang models:
+#--------------------
+# IETF operational interfaces (for status/up/down)
+#IETF_INTERFACES_STATE_RESOURCE = "/data/ietf-interfaces:interfaces-state"
+# Cisco operational model with more detailed interface info (including IPs)
+# YANG module: Cisco-IOS-XE-interfaces-oper:interfaces
+#--------------------
+CISCO_INTERFACES_OPER_RESOURCE = "/data/Cisco-IOS-XE-interfaces-oper:interfaces"
+=== Interface Brief (RESTCONF / IETF + Cisco operational) ===
+Interface           IP-Address/Mask       OK?  Method  Status      Protocol
+-----------------------------------------------------------------------------
+GigabitEthernet1    192.168.160.132       YES  rest    up          up
+GigabitEthernet2    0.0.0.0               YES  rest    up          up
+GigabitEthernet3    0.0.0.0               YES  rest    up          up
+GigabitEthernet4    0.0.0.0               YES  rest    up          up
+Loopback102         102.102.102.102       YES  rest    up          up
+```
