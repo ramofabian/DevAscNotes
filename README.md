@@ -21,6 +21,6 @@ Devnet Associate Study Notes
     <tr>
         <td>3</td>
         <td>Automate IOS-XE</td>
-        <td>[LINK](https://github.com/ramofabian/DevAscNotes/tree/main/Python)</td>
+        <td>[LINK](https://github.com/ramofabian/DevAscNotes/tree/main/IOS-XE)</td>
     </tr>
 </table>
