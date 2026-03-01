@@ -1,6 +1,7 @@
 
 
 import requests
+from requests.auth import HTTPBasicAuth
 import json
 
 """
@@ -15,7 +16,7 @@ client_cert='PATH_TO_CLIENT_CERT_FILE'
 client_private_key='PATH_TO_CLIENT_PRIVATE_KEY_FILE'
 ca_cert='PATH_TO_CA_CERT_THAT_SIGNED_NXAPI_SERVER_CERT'
 
-url='http://10.10.20.40/ins'
+url='https://10.10.20.40/ins'
 myheaders={'content-type':'application/json'}
 payload={
   "ins_api": {
@@ -29,9 +30,9 @@ payload={
 }
 
 if client_cert_auth is False:
-    response = requests.post(url,data=json.dumps(payload), headers=myheaders,auth=(switchuser,switchpassword), verify=False).json()
+    response = requests.post(url,data=json.dumps(payload), headers=myheaders,auth=HTTPBasicAuth(switchuser,switchpassword), verify=False).json()
     print(response)
 else:
     url='https://10.10.20.40/ins'
-    response = requests.post(url,data=json.dumps(payload), headers=myheaders,auth=(switchuser,switchpassword),cert=(client_cert,client_private_key),verify=ca_cert).json()
+    response = requests.post(url,data=json.dumps(payload), headers=myheaders,auth=HTTPBasicAuth(switchuser,switchpassword),cert=(client_cert,client_private_key),verify=ca_cert).json()
     print(response)
