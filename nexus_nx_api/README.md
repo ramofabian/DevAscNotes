@@ -295,3 +295,8 @@ xml2js(bodyAnsw, (err, data) => {
     "imdata": []
 }
 ```
+### Using Python to connect into Visor API to collect, delete, edit and post data
+Run the python script:
+```sh
+python nexus_nx_api\nxapi_rest.py
+```

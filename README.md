@@ -26,6 +26,6 @@ Devnet Associate Study Notes
     <tr>
         <td>4</td>
         <td>Automate Nexus with NX-API</td>
-        <td><a href="https://github.com/ramofabian/DevAscNotes/tree/main/IOS-XE">LINK</a></td>
+        <td><a href="https://github.com/ramofabian/DevAscNotes/tree/main/nexus_nx_api">LINK</a></td>
     </tr>
 </table>
