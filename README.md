@@ -29,7 +29,7 @@ Devnet Associate Study Notes
         <td><a href="https://github.com/ramofabian/DevAscNotes/tree/main/nexus_nx_api">LINK</a></td>
     </tr>
     <tr>
-        <td>4</td>
+        <td>5</td>
         <td>Automate with ACI data center controller</td>
         <td><a href="https://github.com/ramofabian/DevAscNotes/tree/main/DC_ACI">LINK</a></td>
     </tr>
