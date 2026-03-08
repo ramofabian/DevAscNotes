@@ -1,4 +1,4 @@
-from Catalyst_Center.dna_custom_libs.dnahttp import get, save_token_to_file
+from dna_custom_libs.dnahttp import get, save_token_to_file
 
 
 def print_devices():
