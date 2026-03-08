@@ -83,10 +83,10 @@ pip install dnacentersdk --upgrade
 ### Script to collect data
 ```bash
 #Linux
-$env:DNA_IP="10.10.20.80"
-$env:DNA_USER="admin"
-$env:DNA_PASSWORD="your_password"
-$env:DNA_SSL="false"
+export DNA_IP="10.10.20.80"
+export DNA_USER="admin"
+export DNA_PASSWORD="your_password"
+export DNA_SSL="false"
 python Catalyst_Center/dnasdk_test.py
 ```
 ```powershell
@@ -97,3 +97,19 @@ $env:DNA_PASSWORD="your_password"
 $env:DNA_SSL="false"
 python Catalyst_Center/dnasdk_test.py
 ```
+
+### How to get all clients (Special case)
+1. Build loging and get the token
+2. Build a `POST` request with this data:
+    - URL: `https://{{DNA_IP}} /api/assurance/v1/host`
+    - Use the token previously generated: `X-Auth-Token:{{DNA_TOKEN}}`
+    - Add this info in the body:
+    ```json
+    {
+        "starttime":"",
+        "endtime":""
+    }
+    ```
+3. With the received information do the count to get the number of Clients
+
+Information collected from here: https://github.com/cisco-en-programmability/dnacentersdk
