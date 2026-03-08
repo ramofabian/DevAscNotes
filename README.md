@@ -33,4 +33,9 @@ Devnet Associate Study Notes
         <td>Automate with ACI data center controller</td>
         <td><a href="https://github.com/ramofabian/DevAscNotes/tree/main/DC_ACI">LINK</a></td>
     </tr>
+    <tr>
+        <td>6</td>
+        <td>Automate with Catalyst Center</td>
+        <td><a href="https://github.com/ramofabian/DevAscNotes/tree/main/Catalyst_Center">LINK</a></td>
+    </tr>
 </table>
