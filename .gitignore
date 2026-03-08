@@ -2,3 +2,4 @@
 */__pycache__/*
 *.pyc
 *IOS-XE/netconf/yang
+*tokenresponse.json
