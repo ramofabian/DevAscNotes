@@ -38,4 +38,9 @@ Devnet Associate Study Notes
         <td>Automate with Catalyst Center</td>
         <td><a href="https://github.com/ramofabian/DevAscNotes/tree/main/Catalyst_Center">LINK</a></td>
     </tr>
+    <tr>
+        <td>7</td>
+        <td>Automate with SD-WAN (Viptela)</td>
+        <td><a href="https://github.com/ramofabian/DevAscNotes/tree/main/Catalyst_Center">LINK</a></td>
+    </tr>
 </table>
