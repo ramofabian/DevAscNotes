@@ -93,4 +93,15 @@ This repo includes a small script to authenticate to vManage and print the devic
 From the `SD-WAN/` folder:
 ```
 python sdwan_get_devices.py
+
+#Expected output
+HOSTNAME       SYSTEM_IP   SITE  TYPE     REACH      STATUS  VERSION        
+-------------  ----------  ----  -------  ---------  ------  ---------------
+vmanage        10.10.1.1   101   vmanage  reachable  normal  20.10.1        
+vsmart         10.10.1.5   101   vsmart   reachable  normal  20.10.1        
+vbond          10.10.1.3   101   vbond    reachable  normal  20.10.1        
+dc-cedge01     10.10.1.11  100   vedge    reachable  normal  17.10.01.0.1479
+site1-cedge01  10.10.1.13  1001  vedge    reachable  normal  17.10.01.0.1479
+site2-cedge01  10.10.1.15  1002  vedge    reachable  normal  17.10.01.0.1479
+site3-vedge01  10.10.1.17  1003  vedge    reachable  normal  20.10.1  
 ```
