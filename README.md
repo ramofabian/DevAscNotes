@@ -41,6 +41,6 @@ Devnet Associate Study Notes
     <tr>
         <td>7</td>
         <td>Automate with SD-WAN (Viptela)</td>
-        <td><a href="https://github.com/ramofabian/DevAscNotes/tree/main/Catalyst_Center">LINK</a></td>
+        <td><a href="https://github.com/ramofabian/DevAscNotes/tree/main/SD-WAN">LINK</a></td>
     </tr>
 </table>
