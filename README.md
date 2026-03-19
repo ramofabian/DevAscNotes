@@ -43,4 +43,9 @@ Devnet Associate Study Notes
         <td>Automate with SD-WAN (Viptela)</td>
         <td><a href="https://github.com/ramofabian/DevAscNotes/tree/main/SD-WAN">LINK</a></td>
     </tr>
+    <tr>
+        <td>8</td>
+        <td>Automate with Meraki</td>
+        <td><a href="https://github.com/ramofabian/DevAscNotes/tree/main/Meraki">LINK</a></td>
+    </tr>
 </table>
