@@ -48,4 +48,9 @@ Devnet Associate Study Notes
         <td>Automate with Meraki</td>
         <td><a href="https://github.com/ramofabian/DevAscNotes/tree/main/Meraki">LINK</a></td>
     </tr>
+    <tr>
+        <td>9</td>
+        <td>Automate with Cisco Security Platform APIs</td>
+        <td><a href="https://github.com/ramofabian/DevAscNotes/tree/main/Security">LINK</a></td>
+    </tr>
 </table>
