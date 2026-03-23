@@ -1,0 +1,6 @@
+# FMC REST example script (fmcCustom.py)
+# FMC SDK example script (fmc_sdk.py)
+requests>=2.28.0
+python-dotenv>=1.0.0
+fmcapi>=2024.0.0
+ciscoisesdk>=2.4.2
