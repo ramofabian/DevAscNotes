@@ -53,4 +53,9 @@ Devnet Associate Study Notes
         <td>Automate with Cisco Security Platform APIs</td>
         <td><a href="https://github.com/ramofabian/DevAscNotes/tree/main/Security">LINK</a></td>
     </tr>
+    <tr>
+        <td>10</td>
+        <td>Automate with Cisco Collaboration APIs</td>
+        <td><a href="https://github.com/ramofabian/DevAscNotes/tree/main/Collaboration">LINK</a></td>
+    </tr>
 </table>
