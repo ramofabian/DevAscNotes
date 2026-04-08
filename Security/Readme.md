@@ -8,19 +8,19 @@
 - Cisco Secure Firewall Management Center [LINK](https://www.cisco.com/site/us/en/products/security/firewalls/firewall-management-center/index.html)
 ### XDR
 - Extended Defense and Response system.
-- It has an appliance to monitor all in the network and detecting anything might be wrong.
+- It has an appliance to monitor all in the network and detecting anything that might be wrong.
 - It works with other devices like:
     - Secure Endpoint (SE)
     - Secure Malware Analytics (SMA)
 ### Secure Endpoint (SE)
-- Used to be installed on mobile devices (phones, tables and laptops)
+- Used to be installed on mobile devices (phones, tablets and laptops)
 - Also called AMP for endpoints.
 ### Secure Malware Analytics (SMA)
 - It used to be called threat grid.
-- Sandbox enviroment
-- When malware is detected or potetially identified it is sent to Threat grid where it actually inspects what this malware does by running it in an asandbox enviroment and learns about what it is and what attacks.
+- Sandbox environment
+- When malware is detected or potentially identified it is sent to Threat grid where it actually inspects what this malware does by running it in an a sandbox enviroment and learns about what it is and what attacks.
 ### Umbrella
-- It pushes polices onto devices
+- It pushes policies onto devices
 - It is at the end of its life
 - Cisco Secure Access is the new product replacing it.
 ### Secure Connect
@@ -28,7 +28,7 @@
 - It’s a cloud-based service that connects your employees (whether they are in a branch office or working from a coffee shop) to their apps and the internet, while wrapping everything in a layer of high-end security.
 ### ISE
 - Identity Service Engine.
-- It is a compettitor of active directory.
+- It is a competitor of active directory.
 - it can manage:
     - Users
     - Groups
@@ -36,7 +36,7 @@
 - It can be integrated as authentication entity with others Cisco devices
 ## Cisco's Firewall Management Center (FMC) API
 - API documentation: https://www.cisco.com/c/en/us/support/security/defense-center/products-programming-reference-guides-list.html
-- We have to use basic authentication and in the header response the tocken is included and should be added for getting or posting requests.
+- We have to use basic authentication and in the header response the token is included and should be added for getting or posting requests.
 - Additional links:
     - https://github.com/CiscoDevNet/fmc-rest-api/tree/master
     - https://github.com/marksull/fmcapi
@@ -134,13 +134,13 @@ python fmc_sdk.py
     - SDK documentation: https://ciscoisesdk.readthedocs.io/en/latest/
     - Devnet ISE: https://developer.cisco.com/identity-services-engine/
 - Features:
-    - Gather rea-time contextual data for a network, including users and groups.
-    - Gather netwrok threats and vulnerabilities.
-- Importat information:
+    - Gather real-time contextual data for a network, including users and groups.
+    - Gather network threats and vulnerabilities.
+- **Important information**:
     - API should be turned on in 2 different places:
         - Enable API Gateway (this service receives requests through port 443)
-        - Assigne special priviledges to user operating with API services:
-            - Create an **ERS Admin** user (Full rigths user)
+        - Assign special privileges to user operating with API services:
+            - Create an **ERS Admin** user (Full rights user)
             - Create an **ERS Operator** user (Read-only user)
     - API formats:
         - ERS API

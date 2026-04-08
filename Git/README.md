@@ -12,10 +12,10 @@ git status
 ```
 ### See the diff in the commit
 ```bash
-#Runs a diff and Shows all changes in the commit.
+#Runs a diff and shows all changes in the commit.
 git diff
 ```
-### show the commits content via cli
+### show the commit content via cli
 ```bash
 git show
 ```
@@ -56,7 +56,7 @@ git branch -r
 git branch <BRANCH_NAME>
 #Create a branch a switch to that branch inmediatily  
 git checkout -b <BRANCH_NAME>
-#Switch to a already exisiting branch
+#Switch to an already exisiting branch
 git checkout <BRANCH_NAME>
 ```
 ### Merging branch into main
@@ -86,11 +86,11 @@ git logs --oneline
 git logs --oneline
 #2. Load that commit
 git checkout <COMMIT_ID>
-#3. From there new commands can be done but those changes are untached from the main HEAD
+#3. From there new commands can be done but those changes are detached from the main HEAD
 #NOTE: to be able to merge those changes convert it to a branch with this command
 git switch -c <NEW_BRANCH_NAME>
 ```
-### Git revert (Prefred option)
+### Git revert (Preferred option)
 ```bash
 #1. See commit summary and identify the commit
 git logs --oneline

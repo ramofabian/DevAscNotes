@@ -1,7 +1,7 @@
 # Cisco Meraki
-- SDN Cloud-managed networking solution for small to medium bussinesses.
-- Devices like wireless access points, swtiches and firewalls appliances automatically  download their configuration from the cloud-based Meraki Dashboard. The rapidly enabling deployment with mininal on-site configuration.
-- It integrates security with advance firewall capabilities, VPN automation and IoT management, analytics and API integration.
+- SDN Cloud-managed networking solution for small to medium businesses.
+- Devices like wireless access points, switches and firewalls appliances automatically  download their configuration from the cloud-based Meraki Dashboard. This enables rapid deployment with minimal on-site configuration.
+- It integrates security with advanced firewall capabilities, VPN automation and IoT management, analytics and API integration.
 - It uses same concepts from SD-WAN.
 - Link: https://meraki.cisco.com/
 - Workflow:
@@ -10,12 +10,12 @@
     3. Use serial number to add it on the dashboard on the internet.
     4. Cable the device and turn it on.
     5. Device will do ZTP to get auto-configured ready to use.
-- Appliences can be physcal devices or virtual devices:
+- Appliances can be physical devices or virtual devices:
     - vMX/MX (Secure SD-WAN)
 
 <b>Notes:</b>
 
-- For Meraki we need to generate an API-Key from an exisiting user dashboard and it is allowed to be used only one time.
+- For Meraki we need to generate an API-Key from an existing user dashboard and it is allowed to be used only one time.
 - In Meraki the word `network` is the site!! not a subnet-IP with vlans.
 
 ## Meraki capabilities
@@ -26,8 +26,8 @@
     - Captive Portal API:
         - Custome login  to be able use internet (i.e. Airports, hotels internet access).
         - User needs to agree on some terms to be able to use the service.
-        - Desing custome landing page or website.
-3. Video and Analytics, wayfinding & mapping, Asst Tracking and IoT & Security.
+        - Design a custom landing page or website.
+3. Video and Analytics, wayfinding & mapping, Asset Tracking and IoT & Security.
     - IoT services
 
 ## Dashboard API
@@ -44,7 +44,7 @@
 - Uses:
     - Configure
     - Monitor
-    - in normal cases websocket is not fully need the rest-api. 
+    - In most cases, WebSockets aren’t needed for the REST API. 
 
 ### API requests
 Requirements:

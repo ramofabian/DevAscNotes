@@ -1,6 +1,6 @@
 # Automation Nexus devices with NX-API
 Notes:
-- Nexus devices runs an OS called NX-OS which is a fork of a linux.
+- Nexus devices run an OS called NX-OS which is a fork of linux.
 - NX-OS uses the `features` in the same way as `systemctl` in linux to enable/disable services.
 - One service inside is NXAPI which we need to turn on:
     - CLI -> Sandbox
@@ -37,17 +37,17 @@ end
 copy run start
 ```
 ## NXAPI
-This is a web service with 3 services:
+This is a web service with three services:
 - NXAPI-CLI
 - NXAPI-REST (DME)
 - RESCONF (YANG)
 
 ### NXAPI-CLI
-- It sends request with the entered CLI command and retrieves the output in json format. 
+- It sends requests with the entered CLI command and retrieves the output in json format. 
 - It can be 1 or more commands, all of them will be executed on CLI.
 - Configuration commands can also be executed.
 - It works with `JSON-RPC`, `XML`, `JSON` formats.
-- To be cable to use it requires the URL have the `ins` endpoint at the end, like this: `https://10.10.20.40/ins`
+- To be able to use it requires the URL have the `ins` endpoint at the end, like this: `https://10.10.20.40/ins`
 Example:
 1. Sending the command `show version`.
 2. `JSON` Request should be like:
@@ -64,7 +64,7 @@ Example:
   }
 ]
 ```
-3. Node respose:
+3. Node response:
 ```json
 {
   "jsonrpc": "2.0",
@@ -114,15 +114,15 @@ python nexus_nx_api/nxapi-cli.py
 ### NXAPI-REST (DME)
 - It is a REST API
 - URL should begin with `<HTTP/HTTPS>://<HOST_IP/FQDN_DOMAIN>/sys`
-- `sys` is an object and have models to structure the data.
+- `sys` is an object and has models to structure the data.
 - To know which objects and models there are available for the NX-OS we can check it on this URL: https://<HOST_IP>/visore.html
-- Information is stored in herachical tree structure known as the management information tree (MIT).
-- Each `MIT` represents a managed object or group of objects organized in herachical way.
-- `NX-API-REST` uses information-model-based achitecture.
-  - Managed Objects instances are refered as `MOs`.
+- Information is stored in hierarchical tree structure known as the management information tree (MIT).
+- Each `MIT` represents a managed object or group of objects organized in hierarchical way.
+- `NX-API-REST` uses information-model-based architecture.
+  - Managed Objects instances are referred as `MOs`.
   - Every managed object in the system is identified by a unique name `DN`.
-  - Each object can be refered to by its relative name `RN`. It identifies an object relative to its parent object.
-  - `Distnguished names` it are directly mapped to URLs same as `RN`
+  - Each object can be referred to by its relative name `RN`. It identifies an object relative to its parent object.
+  - `Distinguished names` it are directly mapped to URLs same as `RN`
   - This API operates in forgiving mode, which means that missing attributes are substituted with default values (If applicable).
 - Data management engine or `DME` validates and rejects incorrect attributes.
 
@@ -134,10 +134,10 @@ python nexus_nx_api/nxapi-cli.py
 
 ### NXAPI-REST Postman using basic authentication
 In this example we use NXAPI-CLI to get the output from the command: `show ip interface brief`
-1. Configure enviroment variables.
+1. Configure environment variables.
   - NK9_IP = Host IP
   - NK9_USER = Username to login on N9k
-  - NK9_PASSWORD = Password to login on N9k (enbale encryption for this entry)
+  - NK9_PASSWORD = Password to login on N9k (enable encryption for this entry)
 2. Create a request:
   - Type: `POST`
   - URL: `https://{{NK9_IP}}/ins/`
@@ -176,14 +176,14 @@ To be able to use this option we need to do the following steps:
   ```xml
   <aaaUser name="{{NK9_USER}}" pwd="{{NK9_PASSWORD}}"/>
   ```
-  b. Use JavaScript script to parse the response body, collect the token ID and save it in variable inside of enviroment (In this case we should have a variable pre-configured in postman).
+  b. Use JavaScript script to parse the response body, collect the token ID and save it in variable inside of environment (In this case we should have a variable pre-configured in postman).
   Script to parse the json format:
 ```js
-//Convering the resonse in js dictionary
+//Converting the response in js dictionary
 var jsonData = pm.response.json();
 //Reaching token data
 var tk = jsonData.imdata[0].aaaLogin.attributes.token;
-//Saving to information in "token" enviroment var
+//Saving to information in "token" environment variable
 pm.environment.set("token",tk);
 //Printing the information in console
 console.log(tk)
@@ -195,7 +195,7 @@ console.log(tk)
 const xml2js = require('xml2js').parseString;
 //Converting the response in String format
 var bodyAnsw = pm.response.text()
-//Converting the XML data into a JS dictonary and saving it in a env var
+//Converting the XML data into a JS dictionary and saving it in an env var
 xml2js(bodyAnsw, (err, data) => {
     if (err) throw err;
     var tk = data.imdata.aaaLogin[0].$.token
@@ -206,7 +206,7 @@ xml2js(bodyAnsw, (err, data) => {
 2. Use the collected token in a new request in the next section.
 
 ### Using Visor API (NS-API-REST)
-- To access it: https://<HOST_IP>/visore.html, Visor web page show information and helps to get right endpoint address for each query.
+- To access it: https://<HOST_IP>/visore.html, The Visore web page shows information and helps to get right endpoint address for each query.
 - It is required to have valid credentials to be able to login on the webportal.
 - API documentation: https://www.cisco.com/c/en/us/td/docs/switches/datacenter/nexus9000/sw/7-x/programmability/guide/b_Cisco_Nexus_9000_Series_NX-OS_Programmability_Guide_7x/b_Cisco_Nexus_9000_Series_NX-OS_Programmability_Guide_7x_chapter_010001.html
 - Tips:

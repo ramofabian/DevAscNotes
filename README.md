@@ -1,5 +1,5 @@
 # DevAscNotes
-Devnet Associate Study Notes
+Personal DevNet Associate study notes with CBT Nuggets course
 
 ## Topics
 <table>

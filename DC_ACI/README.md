@@ -1,14 +1,14 @@
 # ACI Data Center controller
-- Sowftware defined controller
-- ACI stands for: Application Centric Infrastructure
-- Componenets:
+- Software defined controller.
+- ACI stands for: Application Centric Infrastructure.
+- Components:
     - Fabric (Nexus 9K devices)
         - Routing protocols:
             - Point2Point links are L3 and runs `OSPF` or `IS-IS` (UNDERLAY)
             - Tunneling created with `VXLAN` and `BGP-EVPN` (OVERLAY)
-        - CLOS achitecture (Leaves NX 9.3K and Spines NX 9.5K)
+        - CLOS architecture (Leaves NX 9.3K and Spines NX 9.5K)
         - `VXLAN` used to tunnel the frames from one end to another end (ends could be any leaf or Spine)
-        - ECMP is used to have path full redundacy
+        - ECMP is used to have path full redundancy
         - Endpoints:
             - Baremetal servers
             - VMs workloads
@@ -16,28 +16,28 @@
             - APIC Cluster
             - Load balancers services
             - External L3Out (Legacy DCs)
-    - Aplication Policies
-        - Policies are dinamically deployed based on applications running behind the fabric.
+    - Application Policies
+        - Policies are dynamically deployed based on applications running behind the fabric.
         - APIC:
             - Cisco UCS servers running application policy cluster
             - It uses NXAPI-REST to manage the Nexus 9k.
     - Controller
 ## Application Policies
-- Tenants DCs can manage thousands of tenants and those not always talk eache other.
+- Tenants DCs can manage thousands of tenants and those do not always talk to each other.
 - Structure:
     - Uni is equal to sys from api app
     - DN = distinguish name
     - Tenant:
-        - Creates a boundary that separates differents groups or customers ensuring their applications do not interact unless explicity configured
+        - Creates a boundary that separates different groups or customers ensuring their applications do not interact unless explicitly configured.
     - Policy:
         - EPG = Endpoint group
             - By default they are not allowed to talk with anything outside of group
         - Contract:
-            - Roules indicating which other EPGs can communicate each other
+            - Rules indicating which other EPGs can communicate each other
         - Filters (ACLs)
-            - There is posibility to apply primary and secondary filter
+            - There is possibility to apply primary and secondary filter
     - Network:
-        - VRFs, bridge doamins, subnets and external networks definitions
+        - VRFs, bridge domains, subnets and external networks definitions
         - Notes: 
             - EPG belongs to bridge domains
             - Subnets are attached to VRFs and bridge domains.
@@ -73,15 +73,15 @@
 ```
 ## APIC Object Model
 - it uses visore as NX-API do `https://<ACI_IP>/visore`.
-- It has an API inspector to see all requiest in real time.
+- It has an API inspector to see all request in real time.
 - `uni` = This is the root and `MO`
 - Searching classes:
-    - Almast always classes contains modules and all of them have a prefix of `fv` or incase onf contracts it is `v2`
+    - Almost always classes contains modules and all of them have a prefix of `fv` or in case of contracts it is `v2`
     - We need to search by classes like:
         - Tenant
         - Bridge Domain
         - Subnet
-        - Aplication profile = Ap
+        - Application profile = Ap
         - Epg = AEPg
         - Endpoint group = CEp
         - Ip Address = IP
@@ -90,7 +90,7 @@
         - fvTenant
         - fvSubnet
 - Searching objects:
-    - It has prefixes likeL
+    - It has prefixes like:
         - `tn`+`Name` = tenant
         - `BD`+`Name` = Bridge domain
         - `ap`+`Name` = Application profile
@@ -101,14 +101,14 @@
 - Login method is via token authentication.
     - We connect by using authorized account and request a token.
     - With the token ID and based on the implemented policies API calls can be executed.
-    - Token ID has expiration time, it must be renewved before this time ends.
+    - Token ID has expiration time, it must be renewed before this time ends.
 - Endpoints to collect and login:
     - For login and get a token: `https://{{apic}}:{{apic_port}}/api/aaaLogin.json` (`POST` request with body should be same as NX-API-login)
     - Tenant list: `https://{{apic}}:{{apic_port}}/api/class/fvTenant.json` (`GET` request with token included on headers and cookies)
     - Application profile list: `https://{{apic}}:{{apic_port}}/api/class/fvAp.json` (`GET` request with token included on headers and cookies)
     - Listing all applications profiles for a specific tenant: `https://{{apic}}:{{apic_port}}/api/node/mo/<TENANT_NAME>/ap-access.json` (`GET` request with token included on headers and cookies)
 - Endpoints to create objects:
-    - Createring a tenant: `https://{{apic}}:{{apic_port}}/api/node/mo/uni.json` (`POST` request with token included on headers and cookies)
+    - Creating a tenant: `https://{{apic}}:{{apic_port}}/api/node/mo/uni.json` (`POST` request with token included on headers and cookies)
         Body:
         ```json
         {
@@ -125,7 +125,7 @@
         ```
 - Python script to collect and list all tenants configured on the ACI
 ```sh
-#Create virtual enviroment variables (Linux)
+#Create virtual environment variables (Linux)
 export APIC_HOST_ENV = "APIC_HOST"
 export APIC_USERNAME_ENV = "APIC_USERNAME"
 export APIC_PASSWORD_ENV = "APIC_PASSWORD"

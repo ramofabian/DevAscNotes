@@ -1,10 +1,10 @@
-# Atomating with Cisco IOS-XE
+# Automating with Cisco IOS-XE
 
 ## YANG and Netconf with IOS-XE
 Pre-requisites:
 1. eve-ng hosted locally or on cloud.
-2. CRs1000v with IOS-EX 16.x or newer. [eve-ng images link](https://github.com/hegdepavankumar/Cisco-Images-for-GNS3-and-EVE-NG?tab=readme-ov-file)
-3. Internet or local ssh connection 
+2. CSR1000v with IOS-XE 16.x or newer. [eve-ng images link](https://github.com/hegdepavankumar/Cisco-Images-for-GNS3-and-EVE-NG?tab=readme-ov-file)
+3. Internet or local `SSH` connection 
 
 <b>Notes:</b> 
 - Link of supported HW for IOS-XE [link](https://www.cisco.com/site/us/en/products/networking/cloud-networking/ios-xe/index.html)
@@ -13,22 +13,22 @@ Pre-requisites:
 <img src="Pictures/lab1_ios_xe.png" alt="isolated" width="200"/>
 
 ### YANG Model
-YANG models defines how the data should be structured to be able to interact with some specific vendor equipment, it is ussually created by the vendor itself.
+YANG models define how the data should be structured to be able to interact with some specific vendor equipment, it is usually created by the vendor itself.
 Link to all official available models: https://www.netconfcentral.org/
 
-Those YANG modules convert the commands outputs in XML or JSON which is more friendly for the application to process it. There are standards ruled by IEEE and IETF which dictate the basicis for verdor's YANG models should be created and worked to make it easy to parse it in a multiverndor network.
+Those YANG modules convert the commands outputs in XML or JSON which is more friendly for the application to process it. There are standards ruled by IEEE and IETF which dictate the basics for vendor's YANG models should be created and worked to make it easy to parse it in a multivendor network.
 
 ### NETCONF Protocol
-- Protocol used to interact with network elements in similar way as SSH does.
+- Protocol used to interact with network elements in a similar way as SSH does.
 - `TCP` based protocol, by default it uses the port `830`
-- It runs on top of `SSH` (it means, netconf behavies same as SSH protocol exchanging keys)
+- It runs on top of `SSH` (it means, netconf behaves same as SSH protocol exchanging keys)
 - It uses `RPC` (Remote Procedure Calls) to interact with the NEs.
-- When the connection is establised, the NE will reply with the list of capabilities (List of supported YANG models).
-- When an `RPC` is send, the origin adds on the header a message-id with a ramdom value. Once it is received and the NE replies to it, it uses the same message-id.
+- When the connection is established, the NE will reply with the list of capabilities (List of supported YANG models).
+- When an `RPC` is sent, the origin adds on the header a message-id with a random value. Once it is received and the NE replies to it, it uses the same message-id.
 
 #### RPC (Remote Procedure Calls)
 - It is a built in command to get or push data by using YANG model.
-- Type of c:
+- Type of requests:
     - `get`: Get operational state information
     - `get-config`: Get configuration
     - `set-config`: Push confguration
@@ -73,7 +73,7 @@ login local
 transport input ssh
 exit
 
-#Configuring use/passowrd
+#Configuring user/password
 username admin priv 15 secret password
 
 #Configure NETCONF
@@ -98,7 +98,7 @@ login local
 transport input ssh
 exit
 
-#Configuring use/passowrd
+#Configuring user/password
 username admin priv 15 secret password
 
 #Configure NETCONF
@@ -107,8 +107,8 @@ netconf-yang
 
 ### Collecting data with NETCONF
 Execute python  script to collect interface information from the remote node:
-1. Connect via CLI to CSR1 and CSR2, collect management IP (In this case is the DCHP IP running on port Gi0/0).
-2. Open the python script at `IOS-XE\netconf\connec.py` replace the IP and credentials acordingly.
+1. Connect via CLI to CSR1 and CSR2, collect management IP (In this case is the DHCP IP running on port Gi0/0).
+2. Open the python script at `IOS-XE\netconf\connec.py` replace the IP and credentials accordingly.
 ```py
 DEVICE = {
         "host": "192.168.160.134",  # TODO: change to your device IP / hostname
@@ -130,8 +130,8 @@ GigabitEthernet4    unassigned        YES           if-oper-state-no-passif-stat
 ```
 
 ### Push data with NETCONF onto remote node
-Execute python script to provision 2 loopbacks IPs in 2 diffenten interfaces in the remote node:
-1. For security best practices, we need to avoid the utilization of credentials, IPs inside of script code. To avoid it, we can use enviroment variables in linux and windows.
+Execute python script to provision 2 loopbacks IPs in 2 different interfaces in the remote node:
+1. For security best practices, we need to avoid the use of credentials, IPs inside of script code. To avoid it, we can use enviroment variables in linux and windows.
 
 Linux
 ```bash
@@ -176,9 +176,9 @@ CSR1#
     - `Running` config: Current live configuration
     - `Candidate` config: We can introduce changes and then `commit` them to make it active
 
-## YANG and Resconf with IOS-XE
+## YANG and RESTCONF with IOS-XE
 ### RESCONF Protocol
-Diffentences:
+Differences:
 <table>
     <tr>
         <th>NETCONF</th>
@@ -192,7 +192,7 @@ Diffentences:
         <td>XML only</td>
         <td>XML/JSON<br>
         <code>Headers -> Content-type (XML/JSON)<br>
-              Headers -> Accept (XML/JSON) used to determent which type we will accept.</code></td>
+              Headers -> Accept (XML/JSON) used to determine which type we will accept.</code></td>
     </tr>
     <tr>
         <td>Release versions years: 2006, 2011</td>
@@ -224,7 +224,7 @@ line console number
 login authentication authentication-list
 end
 ```
-1. Usually `resconf` comes with partial configuration done and it can be verifed like the command below:
+1. Usually `resconf` comes with partial configuration done and it can be verified like the command below:
 ```bash
 CSR2#sh run | include http
 ip http server
@@ -239,9 +239,9 @@ enable
 conf t
 restconf
 ```
-After it, the node will sincrhonize internally and loading all configs (startup, running, candidate) into a HTTP database.
+After it, the node will synchronize internally and loading all configs (startup, running, candidate) into a HTTP database.
 
-3. Verificaation commands:
+3. Verification commands:
 ```sh
 show platform software yang-management process monitor
 show platform software yang-management process
@@ -251,13 +251,13 @@ show netconf-yang sessions detail
 
 ### Connecting to CSR2 via RESCONF using Postman
 #### Getting node capabilities
-List all YANG models supported by the SW version can be checked and compared with the yang model downladed in prevous sections.
+List all YANG models supported by the SW version can be checked and compared with the yang model downloaded in previous sections.
 1. Create new collection and name it.
-2. Create an new evniroments and add in it variables with respective values for:
+2. Create an new environment and add in it variables with respective values for:
     - username=Admin
     - password (encrypted) = password
     - CSR2IP = `<your IP>`
-2. Inside of previusly created collection create a get request and name it `getCapabilities` with the following information:
+2. Inside of previously created collection create a get request and name it `getCapabilities` with the following information:
     - Type of request : `GET`
     - URL: 
         - `https://{{CSR2IP}}/restconf/data/netconf-state/capabilities` --> full netconf capabilities and yang-data-model
@@ -265,7 +265,7 @@ List all YANG models supported by the SW version can be checked and compared wit
     - Headers: 
         - `Content-type : application/yang-data+json` 
         - `Accept : application/yang-data+json`.
-        -  With this configuration we are indicating the remote NE we are sending/receving the information in json format.
+        -  With this configuration we are indicating the remote NE we are sending/receiving the information in json format.
     - Authorization:
         - Auth type: Basic Auth
             - user=`{{username}}`
@@ -319,7 +319,7 @@ List all YANG models supported by the SW version can be checked and compared wit
     }
 }
 ```
-#### Edit a loopback in node
+#### Edit a loopback in a node
 1. Inside of previusly created collection create a get request and name it `createLoopback` with the following information:
     - Type of request : `PUT`
     - URL: `https://{{CSR2IP}}/restconf/data/ietf-interfaces:interfaces/interface=Loopback102`
@@ -378,7 +378,7 @@ VirtualPortGroup0   192.168.1.1           YES  rest    up          up
 #### Using python to provision via restconf
 1. Install request library.
 2. Run python script: `python IOS-XE/resconf/newloop.py`
-This is python script creates a new loopback IP in a IOS-XE from a pool `20.20.20.0/24`.
+This is python script creates a new loopback IP on a IOS-XE from a pool `20.20.20.0/24`.
 ```sh
 python3 IOS-XE/resconf/newloop.py 
 Created Loopback1 with IP 20.20.20.1/255.255.255.255

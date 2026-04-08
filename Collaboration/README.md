@@ -1,9 +1,9 @@
 # Cisco Collaboration
-Official information link: https://www.cisco.com/site/us/en/products/computing/servers-unified-computing-systems/index.html
+Official information: https://www.cisco.com/site/us/en/products/computing/servers-unified-computing-systems/index.html
 ## UCS (Unified Computing System)
 - UCS is a server
-- It has applications in DC and other enviroments
-- It brings services in: compute networking and storage.
+- It has applications in DC and other environments
+- It provides services in compute, networking, and storage.
 - Single point of interface management for the DC network.
 - Supports integration with AI (AI PODs).
 ### UCS Family
@@ -12,10 +12,10 @@ Official information link: https://www.cisco.com/site/us/en/products/computing/s
 - UCS C-Series Modular system (Rack server)
 - UCS S-Series Modular system (Storage server)
 ### Management platforms
-- Cisco intersight (Cloud controller)
+- Cisco Intersight (Cloud controller)
 ```sh
                                 +------------------+
-                                | Cisco Intersigth |
+                                | Cisco Intersight |
                                 |  SDN controller  |
                                 +------------------+
                                           |
@@ -29,7 +29,7 @@ Official information link: https://www.cisco.com/site/us/en/products/computing/s
               |                                                         |
 +---------------------------+                               +---------------------------+
 | Manage compute layer for: |                               | Manage compute layer for: |
-| |_Provissioning           |                               | |_Provissioning           |
+| |_Provisioning            |                               | |_Provisioning            |
 | |_Policies                |                               | |_Policies                |
 | |_Monitoring              |                               | |_Monitoring              |
 +---------------------------+                               | |_Vendor agnostic !!      |
@@ -39,8 +39,8 @@ Official information link: https://www.cisco.com/site/us/en/products/computing/s
 - Python: `ucsmsdk` https://github.com/CiscoDevNet/intersight-python
 - PoweShell: `Powertoll`   https://github.com/CiscoDevNet/intersight-powershell
 
-### Cisco Intersigth Restfull API
-- Offical documentation link: https://intersight.com/apidocs/introduction/overview/
+### Cisco Intersight RESTful API
+- Official documentation link: https://intersight.com/apidocs/introduction/overview/
 - Supports:
   - Cisco UCS
   - Cisco HCI
@@ -50,29 +50,29 @@ Official information link: https://www.cisco.com/site/us/en/products/computing/s
   - Intersight Workload Optimizer
   - VMware vCenter
   - Storage System
-- Restfull API:
-  - Everithing is managed as an object
+- RESTful API:
+  - Everything is managed as an object
   - Uses RSA Key pairs to handle the connection
-  - It can boot devices from boot api
+  - It can boot devices from boot API
 ### AXL API SOAP API
 - Used with Cisco CUCM's SOAP-based Administrative XML Layer (AXL) API.
-- Simmilar utilization as NETCONF but more explicit.
-- Inside of <get-data> there is a unique rpc for the specific action to be executed, like: getUser, getCompute, getPresence.
+- Similar utilization as NETCONF but more explicit.
+- Inside <get-data> there is a unique rpc for the specific action to be executed, like: getUser, getCompute, getPresence.
 - It operates over `HTTPS` and supports `POST` request only.
 - It requires basic authentication.
-- `WSDL` its a file where can be seen all rpc methods, all optenial operations and parameters.
+- A `WSDL` is a file where you can see all RPC methods, optional operations, and parameters.
   - To get the file:
     1.  go to CUCM GUI, go to Application, then Plugins.
-    2. New window pop's up and click on Fund button.
+    2. New window pops up and click on Find button.
     3. Download the Cisco ACL toolkit
     4. Open the downloaded file and go to: schema -> <version> -> AXLAPI.wsdl to find the WSDL file.
-    5. To see the conten of the file use `SoapUI` to see the information. -> [LINK](https://www.soapui.org/)
+    5. To see the content of the file use `SoapUI` to see the information. -> [LINK](https://www.soapui.org/)
 ### UDS REST API
 - Used with User Data Services (UDS) API for `CUCM`.
-- Mainly used for `rea-only` operations (`GET` requests).
+- Mainly used for `read-only` operations (`GET` requests).
 - Check the user profile and make sure the account is part of `Standard CCM End Users` or `Standard CCM Admin Users` Permission Group.
 - It requires basic authentication.
-- In the headers section must be included: `{'Accept':'application/xml', 'Content-type':'application/xml'}`
+- The request headers must include: `{'Accept':'application/xml', 'Content-type':'application/xml'}`
 - Endpoints:
   - To get the full list of users: `https://<URL>:8443/cucm-uds/users` 
   - To get the full list of servers: `https://<URL>:8443/cucm-uds/servers` 

@@ -1,8 +1,8 @@
 # Python Notes
 <b>Important information:</b> 
 
-- Python verison `3.14`
-- Create python virtual enviroment:
+- Python version: `3.14`
+- Create python virtual environment:
 
 <table>
     <tr>
@@ -10,16 +10,16 @@
         <th>Linux</th>
     </tr>
     <tr>
-        <td>Create new virtual enviroment: <code>python3.14.exe -m venv venv</code></td>
-        <td>Create new virtual enviroment: <code>python3.14 -m venv venv</code></td>
+        <td>Create new virtual environment: <code><PYTHON-PATH>/python3.14.exe -m venv venv</code></td>
+        <td>Create new virtual environment: <code>python3.14 -m venv venv</code></td>
     </tr>
     <tr>
-        <td>Load it form cli: <code>.\venv\Scripts\Activate.ps1</code></td>
-        <td>Load it form cli: <code>.\venv\Scripts\activate<code></td>
+        <td>Load it form the cli: <code>venv\Scripts\Activate.ps1</code></td>
+        <td>Load it form the cli: <code>.\venv\Scripts\activate<code></td>
     </tr>
     <tr>
-        <td>Load it form cli: <code>deactivate</code></td>
-        <td>Load it form cli: <code>deactivate</code></td>
+        <td>Load it form the cli: <code>deactivate</code></td>
+        <td>Load it form the cli: <code>deactivate</code></td>
     </tr>
 </table>
 
@@ -38,10 +38,10 @@ A variable in python is a collection of letters (without spaces) defined by the 
     <tr>
         <td><code>String</code></td>
         <td>"this please enter the username"</td>
-        <td>To create an string python requires double, single and triple quotation</td>
+        <td>To create a string python requires double, single and triple quotation</td>
     </tr>
     <tr>
-        <td><code>Integrer</code></td>
+        <td><code>Integer</code></td>
         <td>100</td>
         <td></td>
     </tr>
@@ -52,18 +52,18 @@ A variable in python is a collection of letters (without spaces) defined by the 
     </tr>
     <tr>
         <td><code>Bool</code></td>
-        <td><code>True</code> or <code>Flase</code></td>
+        <td><code>True</code> or <code>False</code></td>
         <td></td>
     </tr>
     <tr>
         <td><code>list</code></td>
         <td><code>["Uno", 2, False, 0, None]</code></td>
-        <td>It Requires of square brakets and the element's are sparated by comma.<br> It is mutable, it means that it can be changes </td>
+        <td>It Requires of square brackets and the element's are separated by comma.<br> It is mutable, it means that it can be changed </td>
     </tr>
     <tr>
         <td><code>dictionary</code></td>
         <td><code>{"key_1":22, "key_2:"cien"}</code></td>
-        <td>It Requires of curly brakets, the element's are sparated by comma and each element is defined by a key and value</td>
+        <td>It Requires of curly brackets, the element's are separated by comma and each element is defined by a key and value</td>
     </tr>
     <tr>
         <td><code>None</code></td>
@@ -77,7 +77,7 @@ A variable in python is a collection of letters (without spaces) defined by the 
     </tr>
 </table>
 
-This is how a variable can be defined and pinted by CLI:
+This is how a variable can be defined and printed by CLI:
 ```py
 int_var = 42
 print(int_var)
@@ -93,8 +93,8 @@ print(dict_var)
 
 To work more with datatypes execute and check the script `datatypes.py`:
 ```py
-pyhton datatypes.py --help
-pyhton datatypes.py
+python datatypes.py --help
+python datatypes.py
 ```
 ## Flow control
 It allows you to control how the script is executed. There are ways to control it like:
@@ -104,16 +104,16 @@ It allows you to control how the script is executed. There are ways to control i
 - `BREAK`
 - `CONTINUE`
 - `NESTED FOR`
-- `MATCH` --> Avatiilabe from python `3.10` onwards
+- `MATCH` --> Available from python `3.10` onwards
 
 Examples:
 ```py
-pyhton flowcontrol.py
+python flowcontrol.py
 ```
 
 ## Functions, Methods, and Classes
 ### Function = Methods
-Function is a group of code that executes specific job and it is reused across the script main utilization. To save code lines these code lines are contaned within an function name whithout spaces. 
+Function is a group of code that executes a specific job and it is reused across the script main utilization. To save code lines these code lines are contained within a function name without spaces. 
 
 An example of a function is `print()` which is used in python to display information on CLI. This is how a function can be defined:
 ```py
@@ -124,18 +124,18 @@ read_keyboard_and_print()
 ```
 
 <b>Advantages:</b>
-- Functions helps to maintain a code clean and easy to read.
-- Reduce the number or code lines.
-- As the code is struced by blocks it is easier to maintain.
+- Functions help to keep a code clean and easy to read.
+- Reduce the number of code lines.
+- As the code is structured by blocks it is easier to maintain.
 
 To execute the code example run the command: `python Python/flowcontrol.py `
 
 ### Clasess
-Clasess are objects object which contains atributes and methods insde.
-<b>built-in class in Python is </b> a strictly defined dictionary with built-in methods. i.e: All datatypes are classes.
+Classes are objects that contain attributes and methods.
+<b>A built-in class in Python is </b> a strictly defined dictionary with built-in methods. i.e: All datatypes are classes.
 
 #### Initialization
-This is how a class can determent which are main initial input parameters needed for class execution.
+This is how a class can determine which are main initial input parameters needed for class execution.
 ```py
 class Car:
     def __init__(self, make: str, model: str, year: int, mileage: int, condition: str, color: str) -> None:
@@ -157,13 +157,13 @@ print(dir(input()))
 To execute the code example run the command: `python Python/functionMethodClasses.py `
 
 ## Data Serialization
-This how information can be structure for machi-to machine comunication like SSH, telenet, NETCONF, GNMI. This data format is dictated by the device you want to conned with.
+This how information can be structured for machi-to-machine communication like SSH, telnet, NETCONF, GNMI. This data format is dictated by the device you want to connect with.
 Most common used types:
 - XML
 - JSON
 - YAML
 
-### XML (Xtensable Markup Lenguague)
+### XML (Extensible Markup Lenguague)
 Data format used in HTL files and use the concept of `tags` for opening and closing. `Netconf` uses this data structure.
 i.e.: 
 ```html
@@ -174,18 +174,18 @@ i.e.:
 ```
 
 <b>NOTES:</b>
-- Lately is not used so ofent as there are more flexible and hubman readable data-structures. However this is one of the most for network automation.
-- Indentiation is not required but it is very usefull to make the information more easy to read.
-- To make a list or identify a list, the tags will be repeted inside a bigger context. Sometimes it uses attributes of `id=1...2`, this depends on application requirements.
+- Lately is not used so often as there are more flexible and human-readable data-structures. However this is one of the most for network automation.
+- Indentation is not required but it is very useful to make the information more easy to read.
+- To make a list or identify a list, the tags will be repeated inside a bigger context. Sometimes it uses attributes of `id=1...2`, this depends on application requirements.
 
 #### Reading a xml file with python
-Follow this procedue:
+Follow this procedure:
 1. Install `xmltodict`: `pip install xmltodict`
 2. use the method `xmltodict.parse(xml_content)` to parse the data
-3. Execute the script to see how parsed informa: `python Python/xmlreader.py `
+3. Execute the script to see how parsed information: `python Python/xmlreader.py `
 
 ### JSON (Java Script Object Notation)
-It's the most used nowodays for programing and use the concept of `key` and `values`. It is similar to python dictionary 
+It's the most used nowadays for programming and use the concept of `key` and `values`. It is similar to python dictionary 
 i.e.:
 ```json
 {
@@ -196,31 +196,31 @@ i.e.:
 
 <b>NOTES:</b>
 - By default the json file is just a collection of strings and to be able to use it, this file should be converted to in memory object.
-- Json requires double questos to any key or strings while python can use single and double quotes.
+- Json requires double quotes to any key or strings while python can use single and double quotes.
 - Lists are defined by `[]`.
 - Collection of `keys:values` should be contained within `{}` and `,`. The same for global context.
 
 #### Reading a json file with python
-- Follow this procedue to parse json to dict:
+- Follow this procedure to parse json to dict:
     1. `json` library is installed by default in python
     2. Use `json.load()` or `json.loads()` to convert the string to a python dictionary.<br>
     <b>Notes:</b> 
     - To use `json.loads()` the string should be in memory already. It means, the .json file has to be read already.
     - To use `json.load()` the file should be opened by python and the json function will read and parse the data.
 
-    3. Execute the script to see how parsed informa: `python Python/jsondata.py `
+    3. Execute the script to see how parsed information: `python Python/jsondata.py `
 
-- Follow this procedue to paconvert dict to json:
+- Follow this procedure to convert dict to json:
     1. `json` library is installed by default in python
     2. Use `json.dump()` or `json.dumps()` to convert the string to a python dictionary.<br>
     <b>Notes:</b> 
     - To use `json.dump()` the string should be in memory and it is used to export to file.
     - To use `json.dumps()` the string should be in memory and it is used to hold the information in RAM.
 
-    3. Execute the script to see how parsed informa: `python Python/jsondata.py `
+    3. Execute the script to see how parsed information: `python Python/jsondata.py `
 
-### YAML (Yet Another Markup Lenguage)
-It is very human reable and similar to JSON. Its susually sued in sowftware development but this format is not used to transmmit data between devices. it uses the concept of tree and branches.
+### YAML (Yet Another Markup Language)
+It is very human readable and similar to JSON. Its usually used in software development but this format is not used to transmit data between devices. it uses the concept of tree and branches.
 i.e.:
 ```yml
 ---
@@ -240,21 +240,21 @@ router1:
 ```
 
 <b>NOTES:</b>
-- Identiation is important to keep everithing in the needed contexte
-- Lists are deviced by one of the item in the list having the character `-`
-- File extension can be `yaml` or `yml`. Systems interpretate both as yaml files.
+- Indentation is important to keep everything in the needed context.
+- Lists are divided by one of the item in the list having the character `-`
+- File extension can be `yaml` or `yml`. Systems interpret both as yaml files.
 
 #### Reading a yaml file with python
 - Follow this procedue to parse json to dict:
     1. Install `pyyaml`: `pip install pyyaml`
     2. Use `yaml.safe_load()` to convert the string to a python dictionary.<br>
-    <b>Notes:</b> Do not use `yaml.load()` becase it can open scurity breaches.
+    <b>Notes:</b> Do not use `yaml.load()` because it can open security vulnerabilities.
     3. Execute the script to see how parsed informa: `python Python/yamlreader.py`
 
 ## API (Application Programming Interface)
-API is how network comonenetes can comunicate each other, it uses HTTP protocol and JSON or XML for data structure. As it uses HTTP protocol, APIs uses its methods to send and received information: `GET`, `POST`, `PUT`, `DELETE`.
+API is how network component can communicate each other, it uses HTTP protocol and JSON or XML for data structure. As it uses HTTP protocol, APIs uses its methods to send and receive information: `GET`, `POST`, `PUT`, `DELETE`.
 
-<b>3 tier Application exmaple:</b>This is how micro services architecture works, by having front, middleware and backend servers which interace eachother for some determiniated object. Companies like Amazon runs hundreds of micro servers like below.
+<b>3 tier Application example:</b>This is how microservices architecture works, by having front, middleware and backend servers which interact eachother for some determined object. Companies like Amazon runs hundreds of micro servers like below.
 
 ```bash
                            API
@@ -296,19 +296,19 @@ API is how network comonenetes can comunicate each other, it uses HTTP protocol 
 - Use SSL or TLS with basic authentication.
 #### API Key Authentication
 - Pre-shared  key by client and server.
-- Key transmision potentially suseptible to interceptions.
-- Typically used for readonly users.
+- Key transmission potentially susceptible to interceptions.
+- Typically used for read-only users.
 #### Rest API-OAUTH
-- Generates a tocker from authentication server.
+- Generates a token from authentication server.
 - Tokens can be checked at anytime to prove validation.
-- Ability to limit the scope and autherization time spam.
+- Ability to limit the scope and authorization time spam.
 - OAUTH => Open Authentication
 ### REST API
-- There is no specific standar to construct API request.
+- There is no specific standard to construct API request.
 - Request and its type can change depending on the software.
 - API documentation is critical for building requests.
 ### REST Structures:
-1. URL or URI: Uniform Resouce Locator, Uniform Resource Identifier.
+1. URL or URI: Uniform Resource Locator, Uniform Resource Identifier.
 2. Method: Get, post, delete, put, update.
 3. Header: Usually uses HTTP headers added in `name:value` pairs.
 i.e.: Keep-alive, timeout, max, content-type, etc.
@@ -317,9 +317,9 @@ i.e.: Keep-alive, timeout, max, content-type, etc.
 - Usually called reverse APIs.
 - HTTP/S post message triggered by an event.
 - Usually it is used to provide event notifications.
-- Ligthweigth APIs driving events.
+- Lightweight APIs driving events.
 - Application can be registered with URL.
-- APP with webhook muct be allways running.
+- APP with webhook must be allways running.
 ### HTTP/S
 #### Methods or Verbs
 List of used methods:
@@ -328,7 +328,7 @@ List of used methods:
 - `DELETE`: Remove information from the remote end.
 - `PUT/PATCH`: Update information in the remote end.
 #### Headers
-This is the metadata used to interact with remote ends and it can indicate the propuse of the message and additional specificiations.
+This is the metadata used to interact with remote ends and it can indicate the purpose of the message and additional specifications.
 #### Payload
 Some time this field is empty and some others might cotains filters for a query itself.
 #### Response codes
@@ -438,9 +438,9 @@ There are many tools that can be used to interact with APIs, among them the most
 - Postman: [LINK](https://www.postman.com/) 
 - Bruno: [LINK](https://www.usebruno.com/)
 
-In there you can create collections and inside a collection, there are many type of requests thta can be done.
+There you can create collections and inside a collection, there are many type of requests that can be done.
 
-### Quering API with Python
+### Querying API with Python
 #### Requirements
 - rich
 - requests
