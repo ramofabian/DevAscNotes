@@ -1,0 +1,43 @@
+---
+name: ansiblelab # Ansible topology using contianerlab
+mgmt:
+  network: ansible_mgmt                # management network name
+  ipv4-subnet: 172.20.20.0/28       # management network subnet
+  #ipv6-subnet: 3fff:172:100:100::/80 # management network subnet
+  mtu: 1500                         # management network MTU
+
+topology:
+  kinds:
+    linux:
+      image: cramos90/ubuntuclient:v0.0.3
+        
+  nodes:
+    ansible:
+      kind: linux
+      image: cramos90/ubuntuserver:v0.0.3
+      mgmt-ipv4: 172.20.20.2
+      ports:
+        - 2222:22
+    client1:
+      kind: linux
+      ports:
+        - 2223:22
+    client2:
+      kind: linux
+      ports :
+        - 2224:22
+    client3:
+      kind: linux
+      ports:
+        - 2225:22
+    client4:
+      kind: linux
+      ports:
+        - 2226:22
+
+  links:
+    # client connection links
+    - endpoints: ["client1:eth1", "client2:eth2"]
+    - endpoints: ["client2:eth1", "client3:eth2"]
+    - endpoints: ["client3:eth1", "client4:eth2"]
+    - endpoints: ["client4:eth1", "client1:eth2"]
