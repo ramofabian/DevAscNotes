@@ -1,0 +1,117 @@
+{
+  "freeTextAnnotations": [
+    {
+      "id": "freeText_1776848812200",
+      "text": "eth0",
+      "position": {
+        "x": 304.02067629789906,
+        "y": 326.26737173796624
+      },
+      "fontSize": 14,
+      "fontColor": "#f8f8f2",
+      "fontWeight": "normal",
+      "fontStyle": "normal",
+      "textDecoration": "none",
+      "textAlign": "left",
+      "fontFamily": "Arial"
+    }
+  ],
+  "freeShapeAnnotations": [
+    {
+      "id": "freeShape_1776848683963",
+      "shapeType": "rectangle",
+      "position": {
+        "x": 375.7142857142857,
+        "y": 241.8045112781955
+      },
+      "width": 294,
+      "height": 257,
+      "fillColor": "rgba(127, 127, 127, 0.16)",
+      "fillOpacity": 0.2,
+      "borderColor": "#f8f8f2",
+      "borderWidth": 1,
+      "borderStyle": "solid",
+      "rotation": 0,
+      "zIndex": -1
+    },
+    {
+      "id": "freeShape_1776848702407",
+      "shapeType": "rectangle",
+      "position": {
+        "x": 248.34586466165416,
+        "y": 220.30075187969913
+      },
+      "width": 445,
+      "height": 291,
+      "fillColor": "rgba(127, 127, 127, 0.16)",
+      "fillOpacity": 0.2,
+      "borderColor": "#f8f8f2",
+      "borderWidth": 1,
+      "borderStyle": "solid",
+      "rotation": 0,
+      "zIndex": -1
+    },
+    {
+      "id": "freeShape_1776848751782",
+      "shapeType": "line",
+      "position": {
+        "x": 300,
+        "y": 363
+      },
+      "endPosition": {
+        "x": 374,
+        "y": 363
+      },
+      "fillColor": "rgba(127, 127, 127, 0.16)",
+      "fillOpacity": 0.2,
+      "borderColor": "#f8f8f2",
+      "borderWidth": 1,
+      "borderStyle": "solid",
+      "rotation": 0,
+      "zIndex": -1
+    }
+  ],
+  "trafficRateAnnotations": [],
+  "groupStyleAnnotations": [],
+  "networkNodeAnnotations": [],
+  "nodeAnnotations": [
+    {
+      "id": "ansible",
+      "position": {
+        "x": 260,
+        "y": 340
+      }
+    },
+    {
+      "id": "client1",
+      "position": {
+        "x": 400,
+        "y": 260
+      }
+    },
+    {
+      "id": "client2",
+      "position": {
+        "x": 600,
+        "y": 260
+      }
+    },
+    {
+      "id": "client3",
+      "position": {
+        "x": 400,
+        "y": 420
+      }
+    },
+    {
+      "id": "client4",
+      "position": {
+        "x": 600,
+        "y": 420
+      }
+    }
+  ],
+  "edgeAnnotations": [],
+  "aliasEndpointAnnotations": [],
+  "viewerSettings": {}
+}

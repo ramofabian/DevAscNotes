@@ -29,7 +29,7 @@ ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
 #OPTIONAL BUT POTENTIALLY NEEDED
 chmod 600 ~/.ssh/id_rsa
 #Copy ssh-key from origing to any destination server/container/VM/host computer
-ssh-copy-id -i ~/.ssh/id_rsa.pub tim@just.some.other.server
+ssh-copy-id-id -i ~/.ssh/id_rsa.pub tim@just.some.other.server
 ```
 - Check Ansible version:
 ```sh
@@ -63,7 +63,7 @@ ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
 #OPTIONAL BUT POTENTIALLY NEEDED
 chmod 600 ~/.ssh/id_rsa
 #Copy ssh-key from origing to any destination server/container/VM/host computer
-ssh-copy -i <ssh-key> <user>@<host>
+ssh-copy-id -i <ssh-key> <user>@<host>
 ```
 - Check Ansible version:
 ```sh
@@ -112,6 +112,9 @@ docker build -t <dockerhub-user>/ubuntuserver:v0.0.1 -f dockerfile_ansible .
 docker build -t <dockerhub-user>/ubuntuclient:v0.0.1 -f dockerfile_client .
 ```
 - Topology definition:
+
+![alt text](pictures/lab1_topology.png "Title")
+
 ```yml
 # Ansible topology using contianerlab
 ---
@@ -125,31 +128,45 @@ mgmt:
 topology:
   kinds:
     linux:
-      image: cramos90/ubuntuclient:v0.0.3
+      image: cramos90/ubuntuclient:v0.0.2
         
   nodes:
     ansible:
       kind: linux
-      image: cramos90/ubuntuserver:v0.0.3
+      image: cramos90/ubuntuserver:v0.0.2
       mgmt-ipv4: 172.20.20.2
       ports:
         - 2222:22
+      binds:
+        - ./ansible-lab01:/home/ansible/ansible-lab01
     client1:
       kind: linux
+      mgmt-ipv4: 172.20.20.3
       ports:
         - 2223:22
+        - 6441:443
+        - 9081:80
     client2:
       kind: linux
+      mgmt-ipv4: 172.20.20.4
       ports :
         - 2224:22
+        - 6442:443
+        - 9082:80
     client3:
       kind: linux
+      mgmt-ipv4: 172.20.20.5
       ports:
         - 2225:22
+        - 6443:443
+        - 9083:80
     client4:
       kind: linux
+      mgmt-ipv4: 172.20.20.6
       ports:
         - 2226:22
+        - 6444:443
+        - 9084:80
 
   links:
     # client connection links
@@ -174,18 +191,84 @@ cat /etc/hosts
 172.20.20.3     clab-ansiblelab-ansible 39014d6dea0b    # Kind: linux
 172.20.20.6     clab-ansiblelab-client1 2d76434f4d71    # Kind: linux
 ```
-- Connect to Anssible container and configure a root password
+- Connect to Ansible/clinet container and configure a root password
 ```sh
-docker exec -it clab-ansiblelab-ansible /bin/bash 
-#Configure root pasword
-passwd root
-#Update the OS
-apt update -y
-#Install openssh
-apt install openssh-server -y
+ssh ansible@clab-ansiblelab-ansible #password=ansible
+ssh client@clab-ansiblelab-client<ID> #password=client
 ``` 
+- Configure passwordless in between ansible container and target machines
+```sh
+ssh-keygen -t rsa -b 4096 -C "Ansible"
+#OPTIONAL BUT POTENTIALLY NEEDED
+chmod 600 ~/.ssh/id_rsa
+#Copy ssh-key from origing to any destination server/container/VM/host computer
+ssh-copy-id -i ~/.ssh/id_rsa client@172.20.20.3
+ssh-copy-id -i ~/.ssh/id_rsa client@172.20.20.4
+ssh-copy-id -i ~/.ssh/id_rsa client@172.20.20.5
+ssh-copy-id -i ~/.ssh/id_rsa client@172.20.20.6
+```
+## Configuring Ansible inventory
+- By default the inventory is allocated at `/etc/ansible/hosts`
+- Create the following directories in `ansible-lab01` folder:
+```sh
+ansible@ansible:~$ tree ansible-lab01/
+ansible-lab01/
+└── serversetup
+    └── inventory
+        └── inventory.yaml
 
-
+3 directories, 1 file
+```
+- Add the following inventory inside of `inventory.yaml`:
+```yaml
+all:
+  children:
+    ubuntucont:
+      hosts:
+        client1:
+          ansible_host: 172.20.20.3
+          ansible_user: client
+          ansible_ssh_private_key_file: ~/.ssh/id_rsa
+        client2:
+          ansible_host: 172.20.20.4
+          ansible_user: client
+          ansible_ssh_private_key_file: ~/.ssh/id_rsa
+        client3:
+          ansible_host: 172.20.20.5
+          ansible_user: client
+          ansible_ssh_private_key_file: ~/.ssh/id_rsa
+        client4:
+          ansible_host: 172.20.20.6
+          ansible_user: client
+          ansible_ssh_private_key_file: ~/.ssh/id_rsa
+    prod:
+      hosts:
+        client1:
+          ansible_host: 172.20.20.3
+          ansible_user: client
+          ansible_ssh_private_key_file: ~/.ssh/id_rsa
+        client2:
+          ansible_host: 172.20.20.4
+          ansible_user: client
+          ansible_ssh_private_key_file: ~/.ssh/id_rsa
+    lab:
+      hosts:
+        client3:
+          ansible_host: 172.20.20.5
+          ansible_user: client
+          ansible_ssh_private_key_file: ~/.ssh/id_rsa
+        client4:
+          ansible_host: 172.20.20.6
+          ansible_user: client
+          ansible_ssh_private_key_file: ~/.ssh/id_rsa
+```
+- Verify reachability by using ansible ping module:
+```bash
+cd ~/ansible-lab01/serversetup
+ansible -i inventory/inventory.yaml ubuntucont -m ping
+ansible -i inventory/inventory.yaml prod -m ping
+ansible -i inventory/inventory.yaml lab -m ping
+```
 ## References
 - https://medium.com/@arundpatil007/understanding-idempotence-a-key-concept-in-computer-science-fe5dc69877c6
 - https://containerlab.dev/
