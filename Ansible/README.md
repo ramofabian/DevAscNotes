@@ -12,6 +12,65 @@
 - **Variables**: Additional information used to deploy information host specific or group specific.
 - **Configuration file**: it is the `ansible.cfg` file use to st global parameter to be able to run the playbook without any issue. i.e: disbale ssl cerificates, connect under specific conditions.
 
+## Package and version
+There are 2 packages available from Ansible community:
+- **ansible-core**: a minimalist language and runtime package containing a set of built-in modules and plugins.
+- **ansible**:  a much larger “batteries included” package, which adds a community-curated selection of Ansible Collections for automating a wide variety of devices.
+
+## Installing ansible in ubuntu server
+- Install ansible
+```sh
+#Ubuntu command
+sudo apt install ansible -y
+```
+- Configure passwordless in between ansible machine and target machines
+```sh
+ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+#OPTIONAL BUT POTENTIALLY NEEDED
+chmod 600 ~/.ssh/id_rsa
+#Copy ssh-key from origing to any destination server/container/VM/host computer
+ssh-copy-id -i ~/.ssh/id_rsa.pub tim@just.some.other.server
+```
+- Check Ansible version:
+```sh
+ansible --version
+ansible-community --version
+```
+
+## Installing with Pip
+### Prerequisites
+- Python3
+- Pip
+
+### Procedure
+- Verify if pip is installed:
+```sh
+python3 -m pip -V
+```
+- Install Ansible:
+```sh
+python3 -m pip install --user ansible
+python3 -m pip install --user ansible-core
+python3 -m pip install --user argcomplete
+```
+- Upgrade Ansible (Optional):
+```sh
+python3 -m pip install --upgrade --user ansible
+```
+- Configure passwordless in between ansible machine and target machines
+```sh
+ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+#OPTIONAL BUT POTENTIALLY NEEDED
+chmod 600 ~/.ssh/id_rsa
+#Copy ssh-key from origing to any destination server/container/VM/host computer
+ssh-copy -i <ssh-key> <user>@<host>
+```
+- Check Ansible version:
+```sh
+ansible --version
+ansible-community --version
+```
+
 ## Configuring enviroment topology
 - Install `containerlab`:
 ```sh
@@ -21,15 +80,32 @@ curl -sL https://containerlab.dev/setup | sudo -E bash -s "all"
 ```sh
 #Docker file for ubuntu server where ansible will be installed
 FROM ubuntu
+
 RUN apt-get update &&\
-    apt install python3 ansible openssh-client vim iputils-ping -y
+    apt install python3 ansible openssh-server vim iputils-ping iproute2 sudo -y
+RUN useradd -m -s /bin/bash ansible && \
+    echo "ansible:ansible" | chpasswd && \
+    adduser ansible sudo
+RUN mkdir /var/run/sshd
+RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
+RUN echo "export VISIBLE=now" >> /etc/profile
+ 
 EXPOSE 22
+CMD ["/usr/sbin/sshd", "-D"] 
 
 #Docker file for client container
 FROM ubuntu
 RUN apt-get update &&\
-    apt install python3 ssh vim -y
+    apt install python3 ssh vim iproute2  openssh-server vim iputils-ping iproute2 sudo -y
+RUN useradd -m -s /bin/bash client && \
+    echo "client:client" | chpasswd && \
+    adduser client sudo
+RUN mkdir /var/run/sshd
+RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
+RUN echo "export VISIBLE=now" >> /etc/profile
+
 EXPOSE 22
+CMD ["/usr/sbin/sshd", "-D"] 
 
 #Building docker images
 docker build -t <dockerhub-user>/ubuntuserver:v0.0.1 -f dockerfile_ansible .
@@ -38,23 +114,42 @@ docker build -t <dockerhub-user>/ubuntuclient:v0.0.1 -f dockerfile_client .
 - Topology definition:
 ```yml
 # Ansible topology using contianerlab
-name: ansible-lab
+---
+name: ansiblelab # Ansible topology using contianerlab
+mgmt:
+  network: ansible_mgmt                # management network name
+  ipv4-subnet: 172.20.20.0/28       # management network subnet
+  #ipv6-subnet: 3fff:172:100:100::/80 # management network subnet
+  mtu: 1500                         # management network MTU
 
 topology:
   kinds:
     linux:
-      image: docker.io/library/ubuntu:latest
+      image: cramos90/ubuntuclient:v0.0.3
+        
   nodes:
     ansible:
       kind: linux
+      image: cramos90/ubuntuserver:v0.0.3
+      mgmt-ipv4: 172.20.20.2
+      ports:
+        - 2222:22
     client1:
       kind: linux
+      ports:
+        - 2223:22
     client2:
       kind: linux
+      ports :
+        - 2224:22
     client3:
       kind: linux
+      ports:
+        - 2225:22
     client4:
       kind: linux
+      ports:
+        - 2226:22
 
   links:
     # client connection links
@@ -90,21 +185,6 @@ apt update -y
 apt install openssh-server -y
 ``` 
 
-
-## Installing ansible
-- Install ansible
-```sh
-#Ubuntu command
-sudo apt install ansible -y
-```
-- Configure passwordless in between ansible machine and target machines
-```sh
-ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
-#OPTIONAL BUT POTENTIALLY NEEDED
-chmod 600 ~/.ssh/id_rsa
-#Copy ssh-key from origing to any destination server/container/VM/host computer
-ssh-copy-id -i ~/.ssh/id_rsa.pub tim@just.some.other.server
-```
 
 ## References
 - https://medium.com/@arundpatil007/understanding-idempotence-a-key-concept-in-computer-science-fe5dc69877c6

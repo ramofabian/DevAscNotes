@@ -9,12 +9,12 @@ mgmt:
 topology:
   kinds:
     linux:
-      image: cramos90/ubuntuclient:v0.0.3
+      image: cramos90/ubuntuclient:v0.0.2
         
   nodes:
     ansible:
       kind: linux
-      image: cramos90/ubuntuserver:v0.0.3
+      image: cramos90/ubuntuserver:v0.0.2
       mgmt-ipv4: 172.20.20.2
       ports:
         - 2222:22
