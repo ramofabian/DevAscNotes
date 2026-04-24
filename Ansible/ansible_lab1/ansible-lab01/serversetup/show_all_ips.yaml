@@ -1,0 +1,55 @@
+---
+- name: Create a unique text file on each host
+  hosts: ubuntucont
+  become: false
+  vars:
+    output_dir: "/home/{{ ansible_user }}"
+  tasks:
+    - name: Print all ipv4 address
+      debug: var=ansible_all_ipv4_addresses
+
+    - name: Print default ip address
+      debug: var=ansible_default_ipv4.address
+
+    - name: Get all Ips in target node
+      ansible.builtin.command: "ip add"
+      register: ip_add
+
+    - name: Write unique content to file in home directory
+      copy:
+        dest: "{{ output_dir }}/{{ ansible_hostname }}_ip_add.txt"
+        content: "{{ ip_add.stdout }}"
+        owner: "{{ ansible_user }}"
+        mode: '0644'
+
+    - name: Get all ports in target node
+      ansible.builtin.command: "ip link"
+      register: ip_link
+
+    - name: Write unique content to file in home directory
+      copy:
+        dest: "{{ output_dir }}/{{ ansible_hostname }}_ip_link.txt"
+        content: "{{ ip_link.stdout }}"
+        owner: "{{ ansible_user }}"
+        mode: '0644'
+
+    - name: Get all routes in target node
+      ansible.builtin.command: "ip route"
+      register: ip_route
+
+    - name: Write unique content to file in home directory
+      copy:
+        dest: "{{ output_dir }}/{{ ansible_hostname }}_ip_route.txt"
+        content: "{{ ip_route.stdout }}"
+        owner: "{{ ansible_user }}"
+        mode: '0644'
+
+    - name: All in one file
+      lineinfile: 
+        dest: "{{ output_dir }}/{{ ansible_hostname }}_all.txt"
+        line: '{{ item }}'
+        create: true
+      with_items:
+        - "{{ ip_add.stdout }}"
+        - "{{ ip_link.stdout }}"
+        - "{{ ip_route.stdout }}"

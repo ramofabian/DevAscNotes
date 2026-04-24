@@ -1,0 +1,50 @@
+---
+- name: Install and configure Nginx with UFW
+  hosts: lab
+  become: true
+
+  tasks:
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: present
+        update_cache: true #To make sudo update first
+
+    - name: Ensure Nginx is running and enabled
+      service:
+        name: nginx
+        state: started
+        enabled: true  #Make sure service in enable state
+
+    - name: Install UFW firewall
+      apt: 
+        name: ufw
+        state: latest
+        update_cache: yes 
+      
+    - name: Enable UFW
+      community.general.ufw:
+        state: enabled
+
+    - name: Allow SSH (port 22) through UFW
+      ufw:
+        rule: allow
+        port: '22'
+        proto: tcp
+
+    - name: Allow HTTP (port 80) through UFW
+      ufw:
+        rule: allow
+        port: '80'
+        proto: tcp
+
+    - name: Allow HTTPS (port 443) through UFW
+      ufw:
+        rule: allow
+        port: '443'
+        proto: tcp
+
+    - name: Ensure UFW is enabled
+      ufw:
+        state: enabled #Enable previous polices
+        policy: deny #Default policy action

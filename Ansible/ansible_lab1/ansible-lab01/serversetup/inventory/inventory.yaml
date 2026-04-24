@@ -1,0 +1,40 @@
+all:
+  children:
+    ubuntucont:
+      hosts:
+        client1:
+          ansible_host: 172.20.20.3
+          ansible_user: client
+          ansible_ssh_private_key_file: ~/.ssh/id_rsa
+        client2:
+          ansible_host: 172.20.20.4
+          ansible_user: client
+          ansible_ssh_private_key_file: ~/.ssh/id_rsa
+        client3:
+          ansible_host: 172.20.20.5
+          ansible_user: client
+          ansible_ssh_private_key_file: ~/.ssh/id_rsa
+        client4:
+          ansible_host: 172.20.20.6
+          ansible_user: client
+          ansible_ssh_private_key_file: ~/.ssh/id_rsa
+    prod:
+      hosts:
+        client1:
+          ansible_host: 172.20.20.3
+          ansible_user: client
+          ansible_ssh_private_key_file: ~/.ssh/id_rsa
+        client2:
+          ansible_host: 172.20.20.4
+          ansible_user: client
+          ansible_ssh_private_key_file: ~/.ssh/id_rsa
+    lab:
+      hosts:
+        client3:
+          ansible_host: 172.20.20.5
+          ansible_user: client
+          ansible_ssh_private_key_file: ~/.ssh/id_rsa
+        client4:
+          ansible_host: 172.20.20.6
+          ansible_user: client
+          ansible_ssh_private_key_file: ~/.ssh/id_rsa

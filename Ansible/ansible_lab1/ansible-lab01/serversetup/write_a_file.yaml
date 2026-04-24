@@ -1,0 +1,21 @@
+---
+- name: Create a unique text file on each host
+  hosts: ubuntucont
+  become: false
+  vars:
+    filename: welcome.txt
+
+  tasks:
+    - name: Write unique content to file in home directory
+      copy:
+        dest: "/home/{{ ansible_user }}/{{ filename }}"
+        content: "{{ welcome_message }}"
+        owner: "{{ ansible_user }}"
+        mode: '0644'
+    
+    - name: Check if file exists
+      stat:
+        path: "/home/{{ ansible_user }}/{{ filename }}"
+      register: stat_result
+
+
