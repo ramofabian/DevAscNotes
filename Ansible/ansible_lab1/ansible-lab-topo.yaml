@@ -30,7 +30,7 @@ topology:
     client2:
       kind: linux
       mgmt-ipv4: 172.20.20.4
-      ports :
+      ports:
         - 2224:22
         - 6442:443
         - 9082:80

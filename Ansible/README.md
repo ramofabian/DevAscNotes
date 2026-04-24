@@ -128,12 +128,12 @@ mgmt:
 topology:
   kinds:
     linux:
-      image: cramos90/ubuntuclient:v0.0.2
+      image: <docker-hub-user>/ubuntuclient:v0.0.2
         
   nodes:
     ansible:
       kind: linux
-      image: cramos90/ubuntuserver:v0.0.2
+      image: docker-hub-user/ubuntuserver:v0.0.2
       mgmt-ipv4: 172.20.20.2
       ports:
         - 2222:22
@@ -211,6 +211,10 @@ ssh-copy-id -i ~/.ssh/id_rsa client@172.20.20.6
 - By default the inventory is allocated at `/etc/ansible/hosts`
 - Create the following directories in `ansible-lab01` folder:
 ```sh
+mkdir  ansible-lab01/serversetup
+mkdir  ansible-lab01/inventory
+touch ansible-lab01/inventory/inventory.yaml
+
 ansible@ansible:~$ tree ansible-lab01/
 ansible-lab01/
 └── serversetup
@@ -269,6 +273,198 @@ ansible -i inventory/inventory.yaml ubuntucont -m ping
 ansible -i inventory/inventory.yaml prod -m ping
 ansible -i inventory/inventory.yaml lab -m ping
 ```
+### Configuring first playbook
+- Create a playbook to:
+1. Create a web server using `nginx` and make sure service is always enable.
+2. Use `ufw` to make sure ports: 22, 443 and 80 are open.
+
+- Playgroung definition (it will be executed in all hosts under lab group):
+```yaml
+---
+- name: Install and configure Nginx with UFW
+  hosts: lab
+  become: true
+
+  tasks:
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: present
+        update_cache: true #To make sudo update first
+
+    - name: Ensure Nginx is running and enabled
+      service:
+        name: nginx
+        state: started
+        enabled: true  #Make sure service in enable state
+
+    - name: Install UFW firewall
+      apt: 
+        name: ufw
+        state: latest
+        update_cache: yes 
+      
+    - name: Enable UFW
+      community.general.ufw:
+        state: enabled
+
+    - name: Allow SSH (port 22) through UFW
+      ufw:
+        rule: allow
+        port: '22'
+        proto: tcp
+
+    - name: Allow HTTP (port 80) through UFW
+      ufw:
+        rule: allow
+        port: '80'
+        proto: tcp
+
+    - name: Allow HTTPS (port 443) through UFW
+      ufw:
+        rule: allow
+        port: '443'
+        proto: tcp
+
+    - name: Ensure UFW is enabled
+      ufw:
+        state: enabled #Enable previous polices
+        policy: deny #Default policy action
+
+```
+- Executing playbook:
+```sh
+cd ansible-lab01/serversetup/
+touch web_setup_lab.yaml
+# We use the option --ask-become-pass to order ansible to ask the sudo password to become sudo with root priviledges
+ansible-playbook -i  inventory/inventory.yaml web_setup_lab.yaml --ask-become-pass
+```
+- Execution output:
+```sh
+nsible@ansible:~$ cd ansible-lab01/serversetup/
+ansible@ansible:~/ansible-lab01/serversetup$ ansible-playbook -i  inventory/inventory.yaml web_setup_lab.yaml --ask-become-pass
+BECOME password: 
+
+PLAY [Install and configure Nginx with UFW] ***********************************************************************************************************************************************************
+
+TASK [Gathering Facts] ********************************************************************************************************************************************************************************
+ok: [client3]
+ok: [client4]
+
+TASK [Install Nginx] **********************************************************************************************************************************************************************************
+ok: [client4]
+ok: [client3]
+
+TASK [Ensure Nginx is running and enabled] ************************************************************************************************************************************************************
+changed: [client3]
+changed: [client4]
+
+TASK [Install UFW firewall] ***************************************************************************************************************************************************************************
+changed: [client3]
+changed: [client4]
+
+TASK [Enable UFW] *************************************************************************************************************************************************************************************
+changed: [client3]
+changed: [client4]
+
+TASK [Allow SSH (port 22) through UFW] ****************************************************************************************************************************************************************
+changed: [client4]
+changed: [client3]
+
+TASK [Allow HTTP (port 80) through UFW] ***************************************************************************************************************************************************************
+changed: [client3]
+changed: [client4]
+
+TASK [Allow HTTPS (port 443) through UFW] *************************************************************************************************************************************************************
+changed: [client3]
+changed: [client4]
+
+TASK [Ensure UFW is enabled] **************************************************************************************************************************************************************************
+ok: [client4]
+ok: [client3]
+
+PLAY RECAP ********************************************************************************************************************************************************************************************
+client3                    : ok=9    changed=6    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+client4                    : ok=9    changed=6    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+
+```
+- Running postcheck in lab group hosts:
+```sh
+lient@client4:~$ service nginx status
+ * nginx is running
+client@client4:~$ sudo ufw status
+[sudo] password for client: 
+Status: active
+
+To                         Action      From
+--                         ------      ----
+22/tcp                     ALLOW       Anywhere                  
+80/tcp                     ALLOW       Anywhere                  
+443/tcp                    ALLOW       Anywhere                  
+22/tcp (v6)                ALLOW       Anywhere (v6)             
+80/tcp (v6)                ALLOW       Anywhere (v6)             
+443/tcp (v6)               ALLOW       Anywhere (v6)             
+
+client@client4:~$ 
+
+# from localhost
+curl -k http://localhost:9084/ #client 4
+curl -k http://localhost:9083/ #client 3
+```
+### Hosts Vars and Group Vars
+- By default Ansible looks for a folder called `host_vars`, it should be created:
+```sh
+mkdir host_vars
+```
+- By default Anible looks inside of `host_vars` folder for files with the same name added in the inventory.
+```sh
+ansible@ansible:~/ansible-lab01/serversetup$ tree
+.
+├── all_available_var_facts.txt
+├── host_vars
+│   ├── client1.yaml
+│   ├── client2.yaml
+│   ├── client3.yaml
+│   └── client4.yaml
+```
+- Inside of each `.yaml` file specific information can be added which will be used by the playbook duing the executon.
+- In the file `client1.yaml` the information below is saved and it can be called for client1 exclusively by calling the key like: `{{ welcome_message }}`:
+```yaml
+welcome_message: "Hello from client1"
+```
+- This is an example calling information from defined files:
+```yaml
+---
+- name: Create a unique text file on each host
+  hosts: ubuntucont
+  become: false
+  vars:
+    filename: welcome.txt
+
+  tasks:
+    - name: Write unique content to file in home directory
+      copy:
+        dest: "/home/{{ ansible_user }}/{{ filename }}"
+        content: "{{ welcome_message }}" #----> here we are calling the host_var and adding its content
+        owner: "{{ ansible_user }}"
+        mode: '0644'
+    
+    - name: Check if file exists
+      stat:
+        path: "/home/{{ ansible_user }}/{{ filename }}"
+      register: stat_result
+
+```
+## Special commands
+- To to which are the available facts and magic variables for some specific host execute the command below:
+```sh
+#Invetory is optional
+ansible -i <INVENTORY> <HOST> -m ansible.builtin.setup
+```
+- Ansible cheatsheet: https://docs.ansible.com/projects/ansible/latest/command_guide/cheatsheet.html
+
+
 ## References
 - https://medium.com/@arundpatil007/understanding-idempotence-a-key-concept-in-computer-science-fe5dc69877c6
 - https://containerlab.dev/

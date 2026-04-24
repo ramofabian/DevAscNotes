@@ -87,28 +87,32 @@
       "position": {
         "x": 400,
         "y": 260
-      }
+      },
+      "icon": "client"
     },
     {
       "id": "client2",
       "position": {
         "x": 600,
         "y": 260
-      }
+      },
+      "icon": "server"
     },
     {
       "id": "client3",
       "position": {
         "x": 400,
         "y": 420
-      }
+      },
+      "icon": "client"
     },
     {
       "id": "client4",
       "position": {
         "x": 600,
         "y": 420
-      }
+      },
+      "icon": "server"
     }
   ],
   "edgeAnnotations": [],
