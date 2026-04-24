@@ -2,15 +2,15 @@
 - It is an application that can run on a server or desktop.
 - It supports Windows (WSL) or Linux.
 - Ansible is agentless.
-- Main propuse is the automation of massive deployment of infrastructure by configuring servers, swtiches, routers, etc.
-- It uses the concept of **task** for any specific objective we want to achive. i.e. Installing docker in 50 servers.
-- To be able to execute the `task`, it is required an **inventory** where all host IPs, users, passwors will be allocated.
-- With the task or list of tasks and the inventory, during the execution Ansible will connect in parallel to all devices and execute each task in a sequencial way.
-- **Idenpotent behaviour**:  ensures that performing an operation multiple times produces the same result as performing it once, preventing unintended side effects from repeated actions.
-- All files are in **yaml** formating.
+- Main propuse is the automation of massive deployment of infrastructure by configuring servers, switches, routers, etc.
+- It uses the concept of **task** for any specific objective we want to achieve. i.e. Installing docker in 50 servers.
+- To be able to execute the `task`, it is required an **inventory** where all host IPs, users, passwords will be allocated.
+- With the task or list of tasks and the inventory, during the execution Ansible will connect in parallel to all devices and execute each task in a sequential way.
+- **Idempotent behaviour**:  ensures that performing an operation multiple times produces the same result as performing it once, preventing unintended side effects from repeated actions.
+- All files are in **yaml** formatting.
 - **Playbook**: Defines a list of tasks, which machines we want to connect to by pointing them from our inventory.
 - **Variables**: Additional information used to deploy information host specific or group specific.
-- **Configuration file**: it is the `ansible.cfg` file use to st global parameter to be able to run the playbook without any issue. i.e: disbale ssl cerificates, connect under specific conditions.
+- **Configuration file**: it is the `ansible.cfg` file use to set global parameter to be able to run the playbook without any issue. i.e: disable ssl certificates, connect under specific conditions.
 
 ## Package and version
 There are 2 packages available from Ansible community:
@@ -23,13 +23,13 @@ There are 2 packages available from Ansible community:
 #Ubuntu command
 sudo apt install ansible -y
 ```
-- Configure passwordless in between ansible machine and target machines
+- Configure password less in between ansible machine and target machines
 ```sh
 ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
 #OPTIONAL BUT POTENTIALLY NEEDED
 chmod 600 ~/.ssh/id_rsa
-#Copy ssh-key from origing to any destination server/container/VM/host computer
-ssh-copy-id-id -i ~/.ssh/id_rsa.pub tim@just.some.other.server
+#Copy ssh-key from origin to any destination server/container/VM/host computer
+ssh-copy-id -i ~/.ssh/id_rsa.pub tim@just.some.other.server
 ```
 - Check Ansible version:
 ```sh
@@ -71,7 +71,7 @@ ansible --version
 ansible-community --version
 ```
 
-## Configuring enviroment topology
+## Configuring environment topology
 - Install `containerlab`:
 ```sh
 curl -sL https://containerlab.dev/setup | sudo -E bash -s "all"
@@ -191,7 +191,7 @@ cat /etc/hosts
 172.20.20.3     clab-ansiblelab-ansible 39014d6dea0b    # Kind: linux
 172.20.20.6     clab-ansiblelab-client1 2d76434f4d71    # Kind: linux
 ```
-- Connect to Ansible/clinet container and configure a root password
+- Connect to Ansible/client container and configure a root password
 ```sh
 ssh ansible@clab-ansiblelab-ansible #password=ansible
 ssh client@clab-ansiblelab-client<ID> #password=client
@@ -278,7 +278,7 @@ ansible -i inventory/inventory.yaml lab -m ping
 1. Create a web server using `nginx` and make sure service is always enable.
 2. Use `ufw` to make sure ports: 22, 443 and 80 are open.
 
-- Playgroung definition (it will be executed in all hosts under lab group):
+- Playbook definition (it will be executed in all hosts under lab group):
 ```yaml
 ---
 - name: Install and configure Nginx with UFW
@@ -336,7 +336,7 @@ ansible -i inventory/inventory.yaml lab -m ping
 ```sh
 cd ansible-lab01/serversetup/
 touch web_setup_lab.yaml
-# We use the option --ask-become-pass to order ansible to ask the sudo password to become sudo with root priviledges
+# We use the option --ask-become-pass to order ansible to ask the sudo password to become sudo with root privileges
 ansible-playbook -i  inventory/inventory.yaml web_setup_lab.yaml --ask-become-pass
 ```
 - Execution output:
@@ -417,7 +417,7 @@ curl -k http://localhost:9083/ #client 3
 ```sh
 mkdir host_vars
 ```
-- By default Anible looks inside of `host_vars` folder for files with the same name added in the inventory.
+- By default Ansible looks inside of `host_vars` folder for files with the same name added in the inventory.
 ```sh
 ansible@ansible:~/ansible-lab01/serversetup$ tree
 .
@@ -428,7 +428,7 @@ ansible@ansible:~/ansible-lab01/serversetup$ tree
 │   ├── client3.yaml
 │   └── client4.yaml
 ```
-- Inside of each `.yaml` file specific information can be added which will be used by the playbook duing the executon.
+- Inside of each `.yaml` file specific information can be added which will be used by the playbook duing the execution.
 - In the file `client1.yaml` the information below is saved and it can be called for client1 exclusively by calling the key like: `{{ welcome_message }}`:
 ```yaml
 welcome_message: "Hello from client1"
