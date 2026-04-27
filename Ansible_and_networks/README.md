@@ -121,6 +121,7 @@ exit
 
 ```
 ### Inventory
+- Optional, if we want to run acual CLI command we can use the option: `network_cli`. It can parse the output.
 - In local folder create inventory directory and file:
 ```yaml
 all:
@@ -153,3 +154,30 @@ all:
           ansible_connection: netconf
 
 ```
+- Test ansible server connection against all nodes:
+```sh
+#Execut ping to remote end
+ansible -i inventory/inventory.yaml ios_xe_routers  -m ping
+(ansible-lab) devnet@devnet-VirtualBox:/Lab01$ ansible -i inventory/inventory.yaml ios_xe_routers  -m ping
+ios-xe-3 | SUCCESS => {
+    "changed": false,
+    "ping": "pong"
+}
+ios-xe-5 | SUCCESS => {
+    "changed": false,
+    "ping": "pong"
+}
+ios-xe-6 | SUCCESS => {
+    "changed": false,
+    "ping": "pong"
+}
+ios-xe-4 | SUCCESS => {
+    "changed": false,
+    "ping": "pong"
+}
+
+# Gather all facts from remote devices
+ansible -i inventory/inventory.yaml ios_xe_routers  -m ansible.builtin.setup
+```
+### Playbook to gather all facts
+- 

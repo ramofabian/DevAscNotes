@@ -1,5 +1,5 @@
 all:
-  childen:
+  children:
     ios_xe_routers:
       hosts:
         ios-xe-3:

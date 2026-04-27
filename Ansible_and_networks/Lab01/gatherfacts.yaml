@@ -1,0 +1,36 @@
+---
+- name: Gather and display facts from network devices
+  hosts: ios_xe_routers
+  gather_facts: false
+  connection: network_cli
+
+  tasks:
+    - name: Gather all facts from the network devices
+      cisco.ios.ios_facts:
+        gather_subset: all
+      register: ios_xe_facts
+    - name: Display the gathered facts
+      debug:
+        var: ios_xe_facts
+    - name: Display the gathered facts in a more readable format
+      debug:  
+        msg: |
+          Hostname: {{ ios_xe_facts.ansible_facts.ansible_net_hostname }}
+          Model: {{ ios_xe_facts.ansible_facts.ansible_net_model }}
+          Serial Number: {{ ios_xe_facts.ansible_facts.ansible_net_serialnum }}
+          Software Version: {{ ios_xe_facts.ansible_facts.ansible_net_version }}
+          Uptime: {{ ios_xe_facts.ansible_facts.ansible_net_uptime }}
+          Interfaces: {{ ios_xe_facts.ansible_facts.ansible_net_interfaces }}
+          IP Addresses: {{ ios_xe_facts.ansible_facts.ansible_net_ip_addresses }}
+          MAC Addresses: {{ ios_xe_facts.ansible_facts.ansible_net_mac_addresses }}
+          CPU Usage: {{ ios_xe_facts.ansible_facts.ansible_net_cpu_usage }}
+          Memory Usage: {{ ios_xe_facts.ansible_facts.ansible_net_memory_usage }}
+          Disk Usage: {{ ios_xe_facts.ansible_facts.ansible_net_disk_usage }}
+          Software Image: {{ ios_xe_facts.ansible_facts.ansible_net_image }}
+          Software Type: {{ ios_xe_facts.ansible_facts.ansible_net_software_type }}
+          Software Version: {{ ios_xe_facts.ansible_facts.ansible_net_software_version }}
+          Software Release: {{ ios_xe_facts.ansible_facts.ansible_net_software_release }}
+    - name: Save the gathered facts to a file
+      copy:
+        content: "{{ ios_xe_facts | to_nice_json }}"
+        dest: "ios_xe_facts_{{ inventory_hostname }}.json"
