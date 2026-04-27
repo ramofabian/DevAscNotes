@@ -1,0 +1,4 @@
+loopback0:
+  ip: 50.50.50.50
+  mask: 32
+  description: Router5 Loopback0 Interface

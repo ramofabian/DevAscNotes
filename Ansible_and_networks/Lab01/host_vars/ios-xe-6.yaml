@@ -1,0 +1,4 @@
+loopback0:
+  ip: 60.60.60.60
+  mask: 32
+  description: Router6 Loopback0 Interface

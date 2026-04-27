@@ -1,0 +1,4 @@
+loopback0:
+  ip: 30.30.30.30
+  mask: 32
+  description: Router3 Loopback0 Interface

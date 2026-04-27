@@ -180,4 +180,37 @@ ios-xe-4 | SUCCESS => {
 ansible -i inventory/inventory.yaml ios_xe_routers  -m ansible.builtin.setup
 ```
 ### Playbook to gather all facts
-- 
+- For Cisco there are custom facts module located at: `cisco.ios.ios_facts`
+- Use this enviroment variable to avoid issues ssh unknow hosts: `export ANSIBLE_HOST_KEY_CHECKING=False`.
+- Comment `connection_type` key in all hosts from inventory. This is because `connection: ansible.netcommon.network_cli` uses ssh by default.
+- Create plabook:
+```yaml
+---
+- name: Gather and display facts from network devices
+  hosts: ios_xe_routers
+  gather_facts: false
+  connection: ansible.netcommon.network_cli
+
+  tasks:
+    - name: Gather all facts from the network devices
+      connection: ansible.netcommon.network_cli
+      cisco.ios.ios_facts:
+        gather_subset: all
+      register: ios_xe_facts
+    - name: Display the gathered facts
+      debug:
+        var: ios_xe_facts
+    - name: Save the gathered facts to a file
+      copy:
+        content: "{{ ios_xe_facts | to_nice_json }}"
+        dest: "ios_xe_facts_{{ inventory_hostname }}.json"
+```
+- Execute the playbook:
+```sh
+export ANSIBLE_HOST_KEY_CHECKING=False
+ansible-playbook -i inventory/inventory.yaml gatherfacts.yaml
+
+#In case of troubleshooting:
+ansible-playbook -i inventory/inventory.yaml gatherfacts.yaml -vvv
+```
+### Create loopback address
