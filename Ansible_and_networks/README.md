@@ -118,7 +118,15 @@ do sh run | include http
 netconf-yang
 restconf
 exit
-
+```
+- Install ansible by using pip:
+```sh
+mkdir ansible
+cd ansible
+python3 -m venv ansible-lab
+source ansible-lab/bin/activate
+python3 -m pip install --user ansible
+python3 -m pip install --user ansible-core
 ```
 ### Inventory
 - Optional, if we want to run acual CLI command we can use the option: `network_cli`. It can parse the output.
@@ -213,4 +221,91 @@ ansible-playbook -i inventory/inventory.yaml gatherfacts.yaml
 #In case of troubleshooting:
 ansible-playbook -i inventory/inventory.yaml gatherfacts.yaml -vvv
 ```
-### Create loopback address
+### Create loopback address with cli mode
+- Create `host_vars` folder add loopback information:
+```yaml
+loopback0:
+  ip: 30.30.30.30
+  mask: 32
+  description: Router3 Loopback0 Interface
+loopback_ip_list:
+  - name: Loopback1
+    ipv4:
+      - address: 31.31.31.31/32
+  - name: Loopback2
+    ipv4:
+      - address: 32.32.32.32/32
+  - name: Loopback3
+    ipv4:
+      - address: 33.33.33.33/32
+loopback_description_list:
+  - name: Loopback1
+    description: Router3 Loopback1 Interface
+    enabled: true
+  - name: Loopback2
+    description: Router3 Loopback2 Interface
+    enabled: true
+  - name: Loopback3
+    description: Router3 Loopback3 Interface
+    enabled: true
+```
+- Create the playbook
+```yaml
+---
+- name: Configure Loopback Interfaces
+  hosts: ios_xe_routers
+  gather_facts: false
+  connection: ansible.netcommon.network_cli
+
+  tasks:
+    - name: Gather Interface information as structured data
+      cisco.ios.ios_facts:
+        gather_network_resources: l3_interfaces
+      register: interfaces_pre
+    - name: Display PRE Interface information
+      debug:
+        var: interfaces_pre.ansible_facts.ansible_network_resources
+        
+    - name: Configure Loopback0 interfaces on the network devices
+      cisco.ios.ios_interfaces:
+        config:
+          - name: Loopback0
+            description: "{{ loopback0.description }}"
+            enabled: true
+        state: merged
+    - name: Configure Loopback0 IP address on the network devices
+      cisco.ios.ios_l3_interfaces:
+        config:
+          - name: Loopback0
+            ipv4:
+              - address: "{{ loopback0.ip }}/{{ loopback0.mask }}"
+        state: merged
+
+    - name: Configure multiple Loopbacks descriptions
+      cisco.ios.ios_interfaces:
+        config: "{{ loopback_description_list }}"
+        state: merged
+    - name: Configure multiple Loopbacks IPs
+      cisco.ios.ios_l3_interfaces:
+        config: "{{ loopback_ip_list }}"
+        state: merged
+
+    - name: Gather Interface information as structured data
+      cisco.ios.ios_facts:
+        gather_network_resources: l3_interfaces
+      register: interfaces_post
+    - name: Display POST Interface information
+      debug:
+        var: interfaces_post.ansible_facts.ansible_network_resources
+```
+- Executure ansible playbook 
+```sh
+#In the Node run
+ena
+sh ip int brief
+#Run the plyabook
+export ANSIBLE_HOST_KEY_CHECKING=False
+ansible-playbook -i inventory/inventory.yaml create_loopbacks.yaml
+#then check the changes
+sh ip int brief
+```

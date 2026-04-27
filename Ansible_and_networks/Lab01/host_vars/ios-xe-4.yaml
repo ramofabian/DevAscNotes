@@ -2,3 +2,23 @@ loopback0:
   ip: 40.40.40.40
   mask: 32
   description: Router4 Loopback0 Interface
+loopback_ip_list:
+  - name: Loopback1
+    ipv4:
+      - address: 41.41.41.41/32
+  - name: Loopback2
+    ipv4:
+      - address: 42.42.42.42/32
+  - name: Loopback3
+    ipv4:
+      - address: 43.43.43.43/32
+loopback_description_list:
+  - name: Loopback1
+    description: Router4 Loopback1 Interface
+    enabled: true
+  - name: Loopback2
+    description: Router4 Loopback2 Interface
+    enabled: true
+  - name: Loopback3
+    description: Router4 Loopback3 Interface
+    enabled: true

@@ -11,7 +11,8 @@
       register: interfaces_pre
     - name: Display PRE Interface information
       debug:
-        var: interfaces_pre.ansible_facts.ansible_net_interfaces
+        var: interfaces_pre.ansible_facts.ansible_network_resources
+        
     - name: Configure Loopback0 interfaces on the network devices
       cisco.ios.ios_interfaces:
         config:
@@ -26,10 +27,20 @@
             ipv4:
               - address: "{{ loopback0.ip }}/{{ loopback0.mask }}"
         state: merged
+
+    - name: Configure multiple Loopbacks descriptions
+      cisco.ios.ios_interfaces:
+        config: "{{ loopback_description_list }}"
+        state: merged
+    - name: Configure multiple Loopbacks IPs
+      cisco.ios.ios_l3_interfaces:
+        config: "{{ loopback_ip_list }}"
+        state: merged
+
     - name: Gather Interface information as structured data
       cisco.ios.ios_facts:
         gather_network_resources: l3_interfaces
       register: interfaces_post
     - name: Display POST Interface information
       debug:
-        var: interfaces_post.ansible_facts.ansible_net_interfaces
+        var: interfaces_post.ansible_facts.ansible_network_resources

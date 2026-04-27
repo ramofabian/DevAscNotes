@@ -2,3 +2,23 @@ loopback0:
   ip: 50.50.50.50
   mask: 32
   description: Router5 Loopback0 Interface
+loopback_ip_list:
+  - name: Loopback1
+    ipv4:
+      - address: 51.51.51.51/32
+  - name: Loopback2
+    ipv4:
+      - address: 52.52.52.52/32
+  - name: Loopback3
+    ipv4:
+      - address: 53.53.53.53/32
+loopback_description_list:
+  - name: Loopback1
+    description: Router5 Loopback1 Interface
+    enabled: true
+  - name: Loopback2
+    description: Router5 Loopback2 Interface
+    enabled: true
+  - name: Loopback3
+    description: Router5 Loopback3 Interface
+    enabled: true
