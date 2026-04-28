@@ -310,4 +310,74 @@ ansible-playbook -i inventory/inventory.yaml create_loopbacks.yaml
 sh ip int brief
 ```
 ### Configure OSPF with Ansible
-- In this section
+- Configuring interfaces by using `ios_config` mode which is the closets to CLI provissioning.
+- All Gi2 and 3 interfaces will be deployed by using this mode.
+**Note:** This module will always deploy the configuration and it will never follow idempotent mode available in other IOS modules.
+- Created tasks:
+```yaml
+    #Configuring interfaces using manual config with ios_config
+    - name: Configure Interface GigabitEthernet2 with ios_config
+      cisco.ios.ios_config:
+        lines:
+          - no shutdown
+          - ip address {{ manual_config.gig2.ip }} {{ manual_config.gig2.netmask }}
+        parents: interface GigabitEthernet2
+        save_when: modified
+    #Configuring interfaces using manual config with ios_config
+    - name: Configure Interface GigabitEthernet3 with ios_config
+      cisco.ios.ios_config:
+        lines:
+          - no shutdown
+          - ip address {{ manual_config.gig3.ip }} {{ manual_config.gig3.netmask }}
+        parents: interface GigabitEthernet3
+        save_when: modified
+```
+- Additional information added in the `host_vars` folder for each router:
+```yaml
+#Every node has its own information
+manual_config:
+  gig2:
+    ip: 172.10.1.1
+    netmask: 255.255.255.252
+    description: "Connected to R4 GigabitEthernet2 Interface"
+  gig3:
+    ip: 172.10.1.9
+    netmask: 255.255.255.252
+    description: "Connected to R5 GigabitEthernet3 Interface"
+```
+- To be able to deploy ospf we use `ios_ospfv2` module added the IP subnet for all point to point IP addreses plus IPs from loopbacks 0 and 1:
+```yaml
+    - name: Configure OSPF with ios_ospf
+      cisco.ios.ios_ospfv2:
+        config:
+          processes:
+            - process_id: 1
+              areas:
+                - area_id: "0"
+              network:
+                - address: 172.10.1.0
+                  wildcard_bits: 0.0.0.255
+                  area: 0
+                - address: "{{ loopback0.ip }}"
+                  wildcard_bits: 0.0.0.0
+                  area: 0
+                - address: "{{ loopback_ip_list[0].ipv4[0].address.split('/')[0] }}"
+                  wildcard_bits: 0.0.0.0
+                  area: 0
+        state: merged
+```
+- Execute the script:
+```sh
+export ANSIBLE_HOST_KEY_CHECKING=False
+ansible-playbook -i inventory/inventory.yaml configure_ospf.yaml
+```
+- Run verficiation in target nodes via CLI:
+```sh
+sh ip int brief
+ip ospf neighbor
+ip ospf interface
+ip route
+ping <IP-ADDRESS>
+```
+## Links
+- https://docs.ansible.com/projects/ansible/latest/collections/index_module.html#cisco-ios

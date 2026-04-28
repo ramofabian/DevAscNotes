@@ -5,6 +5,17 @@
   connection: ansible.netcommon.network_cli
 
   tasks:
+    - name: Gather Interface information as structured data
+      cisco.ios.ios_facts:
+        gather_network_resources: 
+          - l3_interfaces
+          - ospfv2
+          - ospf_interfaces
+      register: interfaces_pre
+    - name: Display PRE Interface information
+      debug:
+        var: interfaces_pre.ansible_facts.ansible_network_resources
+
     #Configuring interfaces using manual config with ios_config
     - name: Configure Interface GigabitEthernet2 with ios_config
       cisco.ios.ios_config:
@@ -25,18 +36,29 @@
     - name: Configure OSPF with ios_ospf
       cisco.ios.ios_ospfv2:
         config:
-          - process_id: 1
-            areas:
-              - area_id: 0
-                enabled: true
-            network:
-              - address: 172.10.1.0
-                wildcard_bits: 0.0.0.255
-                area: 0
-              - address: {{ loopback0.ip }}
-                wildcard_bits: 0.0.0.0
-                area: 0
-              - address: "{{ loopback_ip_list[0].ipv4[0].address }}"
-                wildcard_bits: 0.0.0.0
-                area: 0
+          processes:
+            - process_id: 1
+              areas:
+                - area_id: "0"
+              network:
+                - address: 172.10.1.0
+                  wildcard_bits: 0.0.0.255
+                  area: 0
+                - address: "{{ loopback0.ip }}"
+                  wildcard_bits: 0.0.0.0
+                  area: 0
+                - address: "{{ loopback_ip_list[0].ipv4[0].address.split('/')[0] }}"
+                  wildcard_bits: 0.0.0.0
+                  area: 0
         state: merged
+
+    - name: Gather Interface information as structured data
+      cisco.ios.ios_facts:
+        gather_network_resources: 
+          - l3_interfaces
+          - ospfv2
+          - ospf_interfaces
+      register: interfaces_pre
+    - name: Display POST Interface information
+      debug:
+        var: interfaces_pre.ansible_facts.ansible_network_resources
