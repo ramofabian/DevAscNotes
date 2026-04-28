@@ -22,3 +22,12 @@ loopback_description_list:
   - name: Loopback3
     description: Router5 Loopback3 Interface
     enabled: true
+manual_config:
+  gig2:
+    ip: 172.10.1.5
+    netmask: 255.255.255.252
+    description: "Connected to R6 GigabitEthernet2 Interface"
+  gig3:
+    ip: 172.10.1.10
+    netmask: 255.255.255.252
+    description: "Connected to R3 GigabitEthernet3 Interface"

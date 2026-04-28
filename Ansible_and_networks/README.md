@@ -309,3 +309,5 @@ ansible-playbook -i inventory/inventory.yaml create_loopbacks.yaml
 #then check the changes
 sh ip int brief
 ```
+### Configure OSPF with Ansible
+- In this section
