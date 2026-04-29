@@ -1,0 +1,19 @@
+---
+- name: Gather and display facts from network devices
+  hosts: ios_xe_routers
+  gather_facts: false
+  connection: ansible.netcommon.network_cli
+
+  tasks:
+    - name: Gather all facts from the network devices
+      connection: ansible.netcommon.network_cli
+      cisco.ios.ios_facts:
+        gather_subset: all
+      register: ios_xe_facts
+    - name: Display the gathered facts
+      debug:
+        var: ios_xe_facts
+    - name: Save the gathered facts to a file
+      copy:
+        content: "{{ ios_xe_facts | to_nice_json }}"
+        dest: "ios_xe_facts_{{ inventory_hostname }}.json"

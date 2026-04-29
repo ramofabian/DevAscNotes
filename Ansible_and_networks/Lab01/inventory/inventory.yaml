@@ -1,0 +1,28 @@
+all:
+  children:
+    ios_xe_routers:
+      hosts:
+        ios-xe-3:
+          ansible_host: 192.168.160.133
+          ansible_user: admin
+          ansible_password: password
+          ansible_network_os: cisco.ios.ios
+          # ansible_connection: netconf
+        ios-xe-4:
+          ansible_host: 192.168.160.130
+          ansible_user: admin
+          ansible_password: password
+          ansible_network_os: cisco.ios.ios
+          # ansible_connection: netconf
+        ios-xe-5:
+          ansible_host: 192.168.160.131
+          ansible_user: admin
+          ansible_password: password
+          ansible_network_os: cisco.ios.ios
+          # ansible_connection: netconf
+        ios-xe-6:
+          ansible_host: 192.168.160.139
+          ansible_user: admin
+          ansible_password: password
+          ansible_network_os: cisco.ios.ios
+          # ansible_connection: netconf

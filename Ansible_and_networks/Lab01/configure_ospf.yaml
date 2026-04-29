@@ -1,0 +1,64 @@
+---
+- name: Configure ospf
+  hosts: ios_xe_routers
+  gather_facts: false
+  connection: ansible.netcommon.network_cli
+
+  tasks:
+    - name: Gather Interface information as structured data
+      cisco.ios.ios_facts:
+        gather_network_resources: 
+          - l3_interfaces
+          - ospfv2
+          - ospf_interfaces
+      register: interfaces_pre
+    - name: Display PRE Interface information
+      debug:
+        var: interfaces_pre.ansible_facts.ansible_network_resources
+
+    #Configuring interfaces using manual config with ios_config
+    - name: Configure Interface GigabitEthernet2 with ios_config
+      cisco.ios.ios_config:
+        lines:
+          - no shutdown
+          - ip address {{ manual_config.gig2.ip }} {{ manual_config.gig2.netmask }}
+        parents: interface GigabitEthernet2
+        save_when: modified
+    #Configuring interfaces using manual config with ios_config
+    - name: Configure Interface GigabitEthernet3 with ios_config
+      cisco.ios.ios_config:
+        lines:
+          - no shutdown
+          - ip address {{ manual_config.gig3.ip }} {{ manual_config.gig3.netmask }}
+        parents: interface GigabitEthernet3
+        save_when: modified
+    #Configure OSPF with ios_ospf
+    - name: Configure OSPF with ios_ospf
+      cisco.ios.ios_ospfv2:
+        config:
+          processes:
+            - process_id: 1
+              areas:
+                - area_id: "0"
+              network:
+                - address: 172.10.1.0
+                  wildcard_bits: 0.0.0.255
+                  area: 0
+                - address: "{{ loopback0.ip }}"
+                  wildcard_bits: 0.0.0.0
+                  area: 0
+                - address: "{{ loopback_ip_list[0].ipv4[0].address.split('/')[0] }}"
+                  wildcard_bits: 0.0.0.0
+                  area: 0
+        state: merged
+
+    - name: Gather Interface information as structured data
+      cisco.ios.ios_facts:
+        gather_network_resources: 
+          - l3_interfaces
+          - ospfv2
+          - ospf_interfaces
+      register: interfaces_pre
+    - name: Display POST Interface information
+      debug:
+        var: interfaces_pre.ansible_facts.ansible_network_resources

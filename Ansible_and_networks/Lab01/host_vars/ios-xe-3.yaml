@@ -1,0 +1,33 @@
+loopback0:
+  ip: 30.30.30.30
+  mask: 32
+  description: Router3 Loopback0 Interface
+loopback_ip_list:
+  - name: Loopback1
+    ipv4:
+      - address: 31.31.31.31/32
+  - name: Loopback2
+    ipv4:
+      - address: 32.32.32.32/32
+  - name: Loopback3
+    ipv4:
+      - address: 33.33.33.33/32
+loopback_description_list:
+  - name: Loopback1
+    description: Router3 Loopback1 Interface
+    enabled: true
+  - name: Loopback2
+    description: Router3 Loopback2 Interface
+    enabled: true
+  - name: Loopback3
+    description: Router3 Loopback3 Interface
+    enabled: true
+manual_config:
+  gig2:
+    ip: 172.10.1.1
+    netmask: 255.255.255.252
+    description: "Connected to R4 GigabitEthernet2 Interface"
+  gig3:
+    ip: 172.10.1.9
+    netmask: 255.255.255.252
+    description: "Connected to R5 GigabitEthernet3 Interface"

@@ -1,0 +1,33 @@
+loopback0:
+  ip: 60.60.60.60
+  mask: 32
+  description: Router6 Loopback0 Interface
+loopback_ip_list:
+  - name: Loopback1
+    ipv4:
+      - address: 61.61.61.61/32
+  - name: Loopback2
+    ipv4:
+      - address: 62.62.62.62/32
+  - name: Loopback3
+    ipv4:
+      - address: 63.63.63.63/32
+loopback_description_list:
+  - name: Loopback1
+    description: Router6 Loopback1 Interface
+    enabled: true
+  - name: Loopback2
+    description: Router6 Loopback2 Interface
+    enabled: true
+  - name: Loopback3
+    description: Router6 Loopback3 Interface
+    enabled: true
+manual_config:
+  gig2:
+    ip: 172.10.1.6
+    netmask: 255.255.255.252
+    description: "Connected to R5 GigabitEthernet2 Interface"
+  gig3:
+    ip: 172.10.1.14
+    netmask: 255.255.255.252
+    description: "Connected to R4 GigabitEthernet3 Interface"
