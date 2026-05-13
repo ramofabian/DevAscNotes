@@ -85,7 +85,7 @@ Personal DevNet Associate study notes with CBT Nuggets course
     </tr>
     <tr>
         <td>16</td>
-        <td>Automate with Cisco Webex APIs</td>
+        <td>Automate with NSO and Terraform</td>
         <td><a href="https://github.com/ramofabian/DevAscNotes/tree/main/NsoAndTerraform">LINK</a></td>
     </tr>
 </table>
