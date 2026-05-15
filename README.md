@@ -88,4 +88,9 @@ Personal DevNet Associate study notes with CBT Nuggets course
         <td>Automate with NSO and Terraform</td>
         <td><a href="https://github.com/ramofabian/DevAscNotes/tree/main/NsoAndTerraform">LINK</a></td>
     </tr>
+    <tr>
+        <td>17</td>
+        <td>Automate OWASP threats and App Security</td>
+        <td><a href="https://github.com/ramofabian/DevAscNotes/tree/main/OwaspAppSec">LINK</a></td>
+    </tr>
 </table>
