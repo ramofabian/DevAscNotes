@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="TestAddNumbers-20260517131756" tests="5" file=".py" time="0.005" timestamp="2026-05-17T13:17:56" failures="0" errors="0" skipped="0">
+	<testcase classname="TestAddNumbers" name="test_add_mixed_numbers" time="0.003" timestamp="2026-05-17T13:17:56" file="AppTesting\UnitTest1\test_mathy.py" line="16"/>
+	<testcase classname="TestAddNumbers" name="test_add_negative_numbers" time="0.000" timestamp="2026-05-17T13:17:56" file="AppTesting\UnitTest1\test_mathy.py" line="13"/>
+	<testcase classname="TestAddNumbers" name="test_add_positive_numbers" time="0.000" timestamp="2026-05-17T13:17:56" file="AppTesting\UnitTest1\test_mathy.py" line="10"/>
+	<testcase classname="TestAddNumbers" name="test_add_strings" time="0.001" timestamp="2026-05-17T13:17:56" file="AppTesting\UnitTest1\test_mathy.py" line="23"/>
+	<testcase classname="TestAddNumbers" name="test_add_zero" time="0.000" timestamp="2026-05-17T13:17:56" file="AppTesting\UnitTest1\test_mathy.py" line="19"/>
+</testsuite>
