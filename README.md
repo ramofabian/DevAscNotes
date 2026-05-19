@@ -100,7 +100,7 @@ Personal DevNet Associate study notes with CBT Nuggets course
     </tr>
     <tr>
         <td>19</td>
-        <td>App testing</td>
+        <td>Devops and pipelines</td>
         <td><a href="https://github.com/ramofabian/DevAscNotes/tree/main/DevopsAndPipeLines">LINK</a></td>
     </tr>
 </table>

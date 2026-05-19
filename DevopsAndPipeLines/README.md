@@ -74,6 +74,7 @@
         - Good Results and keep improving.
         - Bad results and fail fast.
         - No change at all.
+
 ![](images/agle.jpg)
 ## Lean Method
 - Basics for *Agile* methodology.
@@ -95,7 +96,9 @@
 - Customer pull values as needed, it should be available when they need it.
 #### 5. Seek perfection
 - Loop constantly for improvements and increase the efficiency.
+
 ![](images/lean.png)
+
 ## Waterfall Method
 - More rigid approach to development.
 - Goes to only one direction.
@@ -118,7 +121,9 @@
 - Once everything seems to be working, deploy it on production.
 #### 6. Maintenance
 - Develop parches/patches for bugs/issues after the installation.
+
 ![](images/whaterfall.png)
+
 ## CI/CD pipelines
 ### CI Continuos Integration
 - Git Repo:
