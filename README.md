@@ -103,4 +103,9 @@ Personal DevNet Associate study notes with CBT Nuggets course
         <td>Devops and pipelines</td>
         <td><a href="https://github.com/ramofabian/DevAscNotes/tree/main/DevopsAndPipeLines">LINK</a></td>
     </tr>
+    <tr>
+        <td>20</td>
+        <td>IP subneting and protocols</td>
+        <td><a href="https://github.com/ramofabian/DevAscNotes/tree/main/IpSubnetting">LINK</a></td>
+    </tr>
 </table>
