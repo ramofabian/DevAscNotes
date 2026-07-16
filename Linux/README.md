@@ -91,7 +91,7 @@ ls /
 - Bash file requires the line: `#!/bin/bash` or `#!/bin/sh` on top of the document.
 
 Example:
-```
+```bash
 #!/bin/bash
 
 echo "This is a sample script"

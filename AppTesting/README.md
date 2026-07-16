@@ -150,7 +150,7 @@ pip install pytest pytest-html pytest-cov unittest-xml-reporting
 - Then run the script:
 ```sh
 cd AppTesting/UnitTest4
-python -m pytest test_configGenrator.py -v --html=test-report/report.html --junitxml=test-report/report.xml --cov=generate_interface_config --cov-report=html
+python -m pytest test_configGenerator.py -v --html=test-report/report.html --junitxml=test-report/report.xml --cov=generate_interface_config --cov-report=html
 
 #See results from CLI and web at "test-report" folder
 ```

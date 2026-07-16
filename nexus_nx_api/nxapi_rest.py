@@ -1,11 +1,27 @@
+import os
 import requests
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 from pprint import pprint
 
-switchuser = 'admin'
-switchpassword = 'RG!_Yw200'
-switchip = '10.10.20.40'
+try:
+    from dotenv import load_dotenv
+
+    load_dotenv()
+except ImportError:
+    pass
+
+
+def _env(name: str) -> str:
+    value = os.getenv(name)
+    if value is None or not value.strip():
+        raise ValueError(f"Missing required environment variable: {name}")
+    return value.strip()
+
+
+switchuser = _env("NXAPI_USERNAME")
+switchpassword = _env("NXAPI_PASSWORD")
+switchip = _env("NXAPI_SWITCH_IP")
 cookies = {}
 
 def get_token():

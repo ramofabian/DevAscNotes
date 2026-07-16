@@ -1,5 +1,5 @@
 import unittest
-from configGenrator import generate_interface_config
+from configGenerator import generate_interface_config
 
 class TestConfigGenerator(unittest.TestCase):
     def test_generate_interface_config(self):

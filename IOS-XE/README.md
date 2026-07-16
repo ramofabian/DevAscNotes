@@ -159,7 +159,7 @@ Loopback2 -> 10.10.10.1/255.255.255.255
 (venv) 
 ```
 CLI info:
-```
+```text
 CSR1#show ip int brief
 Interface              IP-Address      OK? Method Status                Protocol
 GigabitEthernet1       192.168.160.134 YES DHCP   up                    up
@@ -177,7 +177,7 @@ CSR1#
     - `Candidate` config: We can introduce changes and then `commit` them to make it active
 
 ## YANG and RESTCONF with IOS-XE
-### RESCONF Protocol
+### RESTCONF Protocol
 Differences:
 <table>
     <tr>
@@ -204,9 +204,9 @@ Differences:
     </tr>
 </table>
 
-### RESCONF Configuration
+### RESTCONF Configuration
 
-Configuration of NETCONF/RESCONF using AAA:
+Configuration of NETCONF/RESTCONF using AAA:
 ```sh
 #For AAA only!!
 enable
@@ -224,7 +224,7 @@ line console number
 login authentication authentication-list
 end
 ```
-1. Usually `resconf` comes with partial configuration done and it can be verified like the command below:
+1. Usually `restconf` comes with partial configuration done and it can be verified like the command below:
 ```bash
 CSR2#sh run | include http
 ip http server
@@ -233,7 +233,7 @@ ip http secure-server
 ip http client source-interface GigabitEthernet1
   destination transport-method http
 ```
-2. To turn up the `resconf`:
+2. To turn up the `restconf`:
 ```bash
 enable
 conf t
@@ -249,7 +249,7 @@ show netconf-yang sessions
 show netconf-yang sessions detail
 ```
 
-### Connecting to CSR2 via RESCONF using Postman
+### Connecting to CSR2 via RESTCONF using Postman
 #### Getting node capabilities
 List all YANG models supported by the SW version can be checked and compared with the yang model downloaded in previous sections.
 1. Create new collection and name it.
@@ -261,7 +261,7 @@ List all YANG models supported by the SW version can be checked and compared wit
     - Type of request : `GET`
     - URL: 
         - `https://{{CSR2IP}}/restconf/data/netconf-state/capabilities` --> full netconf capabilities and yang-data-model
-        - `https://{{CSR2IP}}/restconf/data/ietf-restconf-monitoring:restconf-state/capabilities` --> All capabilities supported by resconf
+        - `https://{{CSR2IP}}/restconf/data/ietf-restconf-monitoring:restconf-state/capabilities` --> All capabilities supported by restconf
     - Headers: 
         - `Content-type : application/yang-data+json` 
         - `Accept : application/yang-data+json`.
@@ -353,7 +353,7 @@ List all YANG models supported by the SW version can be checked and compared wit
 ```
 #### Using python to connect via restconf
 1. Install request library.
-2. Run python script: `python IOS-XE/resconf/getdata.py`
+2. Run python script: `python IOS-XE/restconf/getdata.py`
 Expected output:
 ```bash
 #Used yang models:
@@ -377,10 +377,10 @@ VirtualPortGroup0   192.168.1.1           YES  rest    up          up
 ```
 #### Using python to provision via restconf
 1. Install request library.
-2. Run python script: `python IOS-XE/resconf/newloop.py`
+2. Run python script: `python IOS-XE/restconf/newloop.py`
 This is python script creates a new loopback IP on a IOS-XE from a pool `20.20.20.0/24`.
 ```sh
-python3 IOS-XE/resconf/newloop.py 
+python3 IOS-XE/restconf/newloop.py 
 Created Loopback1 with IP 20.20.20.1/255.255.255.255
 Device: 10.10.20.48:443 (RESTCONF user developer)
 ```
