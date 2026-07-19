@@ -74,7 +74,7 @@ API client should check the response body to identify whether the authentication
     - [Cisco code exchange SD-WAN](https://developer.cisco.com/codeexchange/github/repo/CiscoDevNet/Postman-for-Cisco-SD-WAN/)
     - [Postman collection](https://github.com/CiscoDevNet/Postman-for-Cisco-SD-WAN)
 - Cloning git repo:
-```
+```sh
 git clone https://github.com/CiscoDevNet/Postman-for-Cisco-SD-WAN
 ```
 - Open postman and import collections.
@@ -91,7 +91,7 @@ This repo includes a small script to authenticate to vManage and print the devic
 
 ### Run
 From the `SD-WAN/` folder:
-```
+```text
 python sdwan_get_devices.py
 
 #Expected output

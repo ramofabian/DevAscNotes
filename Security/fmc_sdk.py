@@ -48,11 +48,7 @@ def _int_env(name: str, default: int) -> int:
 
 
 def main():
-    # FMC API credentials
-    # host = "fmcrestapisandbox.cisco.com"
-    # username = "knoxkn"
-    # password = "q82ou&_XgM&21mbE"
-
+    # FMC API credentials are read from FMC_URL / FMC_USERNAME / FMC_PASSWORD env vars below.
     try:
         host = _fmc_host(_env("FMC_URL"))
         username = _env("FMC_USERNAME")

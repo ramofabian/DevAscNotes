@@ -23,6 +23,47 @@
     </tr>
 </table>
 
+## Table of Contents
+- [Data Types](#data-types)
+- [Flow control](#flow-control)
+- [Functions, Methods, and Classes](#functions-methods-and-classes)
+  - [Function = Methods](#function-methods)
+  - [Classes](#classes)
+    - [Initialization](#initialization)
+    - [Methods](#methods)
+- [Data Serialization](#data-serialization)
+  - [XML (Extensible Markup Language)](#xml-extensible-markup-language)
+    - [Reading a xml file with python](#reading-a-xml-file-with-python)
+  - [JSON (Java Script Object Notation)](#json-java-script-object-notation)
+    - [Reading a json file with python](#reading-a-json-file-with-python)
+  - [YAML (Yet Another Markup Language)](#yaml-yet-another-markup-language)
+    - [Reading a yaml file with python](#reading-a-yaml-file-with-python)
+- [API (Application Programming Interface)](#api-application-programming-interface)
+  - [Authentication](#authentication)
+    - [Basic Authentication](#basic-authentication)
+    - [API Key Authentication](#api-key-authentication)
+    - [Rest API-OAUTH](#rest-api-oauth)
+  - [REST API](#rest-api)
+  - [REST Structures:](#rest-structures)
+  - [Webhooks](#webhooks)
+  - [HTTP/S](#https)
+    - [Methods or Verbs](#methods-or-verbs)
+    - [Headers](#headers)
+    - [Payload](#payload)
+    - [Response codes](#response-codes)
+  - [Tools](#tools)
+  - [Querying API with Python](#querying-api-with-python)
+    - [Requirements](#requirements)
+    - [Execution](#execution)
+  - [Building your own API using Flask](#building-your-own-api-using-flask)
+  - [Prerequisites](#prerequisites)
+  - [Flask app initialization script](#flask-app-initialization-script)
+  - [Adding a route](#adding-a-route)
+  - [Executing the api with Basic Authentication method enabled](#executing-the-api-with-basic-authentication-method-enabled)
+  - [Executing the api with Web Token used as a param](#executing-the-api-with-web-token-used-as-a-param)
+  - [Executing the api with Bearer Token used in Authentication header](#executing-the-api-with-bearer-token-used-in-authentication-header)
+  - [Executing the api with OAuth2](#executing-the-api-with-oauth2)
+
 ## Data Types
 To work with data types use the file `datatypes.py` script.
 
@@ -130,7 +171,7 @@ read_keyboard_and_print()
 
 To execute the code example run the command: `python Python/flowcontrol.py `
 
-### Clasess
+### Classes
 Classes are objects that contain attributes and methods.
 <b>A built-in class in Python is </b> a strictly defined dictionary with built-in methods. i.e: All datatypes are classes.
 
@@ -163,7 +204,7 @@ Most common used types:
 - JSON
 - YAML
 
-### XML (Extensible Markup Lenguague)
+### XML (Extensible Markup Language)
 Data format used in HTL files and use the concept of `tags` for opening and closing. `Netconf` uses this data structure.
 i.e.: 
 ```html
@@ -481,7 +522,7 @@ http://localhost:8080/|-->Login
                       |-->getdata
                       |-->Pushdata
 ```
-### Pre-requisities
+### Prerequisites
 Libraries:
 - flask
 ```sh
@@ -526,7 +567,7 @@ Body for `POST` request:
 pip install jwt
 python /Python/flaskapi2/readhumanapi.py
 
-#NOTE: Special postman script for reading the token and saving it in enviroment variable
+#NOTE: Special postman script for reading the token and saving it in environment variable
 pm.collectionVariables.set('token', pm.response.json().token)
 ```
 Body for `POST` request:
@@ -537,14 +578,14 @@ Body for `POST` request:
 }
 ```
 
-### Executing the api with Bearer Token used in Athentication header 
+### Executing the api with Bearer Token used in Authentication header 
 Refrerences:
 - https://www.geeksforgeeks.org/python/flask-api-authentication-with-json-web-tokens/
 - https://medium.com/@alfininfo/easy-way-to-create-and-validate-bearer-token-in-flask-application-95d7e8cb2ffd
 ```sh
 python /Python/flaskapi3/readdogsapi.py
 
-#NOTE: Special postman script for reading the token and saving it in enviroment variable
+#NOTE: Special postman script for reading the token and saving it in environment variable
 pm.collectionVariables.set('token', pm.response.json().token)
 ```
 Body for `POST` request:
@@ -572,7 +613,7 @@ Refrerences: https://realpython.com/flask-google-login/
 pip install Authlib 
 python /Python/flaskapi3/readdogsapi.py
 
-#NOTE: Special postman script for reading the token and saving it in enviroment variable
+#NOTE: Special postman script for reading the token and saving it in environment variable
 pm.collectionVariables.set('token', pm.response.json().token)
 ```
 Body for `POST` request:

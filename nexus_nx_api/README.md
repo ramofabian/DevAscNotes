@@ -296,6 +296,12 @@ xml2js(bodyAnsw, (err, data) => {
 }
 ```
 ### Using Python to connect into Visor API to collect, delete, edit and post data
+Needed environment variables:
+```sh
+NXAPI_USERNAME=<SWITCH-USERNAME>
+NXAPI_PASSWORD=<SWITCH-PASSWORD>
+NXAPI_SWITCH_IP=<SWITCH-MANAGEMENT-IP>
+```
 Run the python script:
 ```sh
 python nexus_nx_api\nxapi_rest.py

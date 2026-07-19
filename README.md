@@ -108,4 +108,9 @@ Personal DevNet Associate study notes with CBT Nuggets course
         <td>IP subneting and protocols</td>
         <td><a href="https://github.com/ramofabian/DevAscNotes/tree/main/IpSubnetting">LINK</a></td>
     </tr>
+    <tr>
+        <td>21</td>
+        <td>Connecting to Cisco Sandbox labs via VPN (Ubuntu)</td>
+        <td><a href="https://github.com/ramofabian/DevAscNotes/blob/main/cisco_sandbox_vpn_connection.md">LINK</a></td>
+    </tr>
 </table>

@@ -75,7 +75,7 @@
         - Bad results and fail fast.
         - No change at all.
 
-![](images/agle.jpg)
+![](images/agile.jpg)
 ## Lean Method
 - Basics for *Agile* methodology.
 - This is not a modern software deployment framework.
@@ -122,7 +122,7 @@
 #### 6. Maintenance
 - Develop parches/patches for bugs/issues after the installation.
 
-![](images/whaterfall.png)
+![](images/waterfall.png)
 
 ## CI/CD pipelines
 ### CI Continuos Integration
